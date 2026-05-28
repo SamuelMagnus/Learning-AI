@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080c14">
+<title>AI Pathway — Learn Artificial Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#080c14;--bg2:#0d1220;--bg3:#111827;
+  --border:#1e2d45;--border2:#263a57;--border3:#1a2538;
+  --acc:#b57bff;--acc2:#7c3aed;
+  --suc:#00ffaa;--gold:#e8c547;--red:#ff4466;
+  --text:#e2e8f0;--text2:#94a3b8;--text3:#475569;
+  --serif:'Playfair Display',Georgia,serif;
+  --mono:'Space Mono',monospace;
+  --sans:'DM Sans',sans-serif;
+  --r:6px;--r2:10px;
+  --nav-bg:rgba(8,12,20,0.97);
+}
+[data-theme="light"]{
+  --bg:#f0f4fb;--bg2:#ffffff;--bg3:#e8edf8;
+  --border:#d1d9ee;--border2:#b8c4df;--border3:#dde3f2;
+  --acc:#7c3aed;--acc2:#6d28d9;
+  --suc:#059669;--gold:#b45309;--red:#dc2626;
+  --text:#1e1b4b;--text2:#4c4580;--text3:#8b84b8;
+  --nav-bg:rgba(240,244,251,0.97);
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;transition:background 0.25s,color 0.25s}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+.app{display:flex;flex-direction:column;height:100vh;overflow:hidden;position:relative}
+.app::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.025) 2px,rgba(0,0,0,0.025) 4px);pointer-events:none;z-index:100}
+.glow{position:fixed;width:600px;height:600px;background:radial-gradient(circle,rgba(181,123,255,0.05) 0%,transparent 65%);border-radius:50%;top:-200px;right:-150px;pointer-events:none;z-index:0;animation:glowPulse 8s ease-in-out infinite}
+@keyframes glowPulse{0%,100%{opacity:0.6;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
+nav{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--border);background:var(--nav-bg);position:relative;z-index:10}
+.brand{font-family:var(--serif);font-size:18px;font-weight:700;letter-spacing:-0.02em}
+.brand span{color:var(--acc)}
+.nav-tabs{display:flex;gap:2px}
+.ntab{padding:6px 14px;border-radius:4px;font-size:11px;font-family:var(--mono);border:1px solid transparent;background:none;cursor:pointer;color:var(--text2);letter-spacing:0.05em;transition:all 0.15s}
+.ntab:hover{color:var(--text)}
+.ntab.active{background:rgba(181,123,255,0.1);color:var(--acc);border-color:rgba(181,123,255,0.3)}
+.nav-info{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.05em}
+.nav-info span{color:var(--suc)}
+main{flex:1;overflow:hidden;position:relative;z-index:1}
+.view{display:none;height:100%;overflow-y:auto;padding:20px}
+.view.active{display:block}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;position:relative;overflow:hidden;animation:fadeUp 0.4s ease both}
+.stat-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--acc),transparent);opacity:0.3}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.stat-card:nth-child(1){animation-delay:0.05s}.stat-card:nth-child(2){animation-delay:0.1s}
+.stat-card:nth-child(3){animation-delay:0.15s}.stat-card:nth-child(4){animation-delay:0.2s}
+.stat-l{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px}
+.stat-v{font-family:var(--mono);font-size:26px;font-weight:700;line-height:1;color:var(--acc)}
+.stat-v.g{color:var(--suc)}.stat-v.gold{color:var(--gold)}
+.stat-sub{font-size:11px;color:var(--text3);margin-top:4px}
+.prog-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:18px 20px;margin-bottom:18px;animation:fadeUp 0.4s 0.25s ease both}
+.pc-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+.pc-title{font-family:var(--serif);font-size:15px;font-weight:700;letter-spacing:-0.01em}
+.pc-pct{font-family:var(--mono);font-size:12px;color:var(--acc)}
+.track{height:4px;background:var(--border3);border-radius:2px;margin-bottom:8px;overflow:hidden}
+.fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--acc2),var(--acc));transition:width 1.2s cubic-bezier(0.25,1,0.5,1)}
+.month-row{display:flex;justify-content:space-between;margin-bottom:14px}
+.ml{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.04em}
+.weeks-dots{display:grid;grid-template-columns:repeat(12,1fr);gap:4px}
+.wd{height:24px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:8px;cursor:pointer;transition:all 0.15s;border:1px solid transparent}
+.wd:hover{transform:translateY(-2px)}
+.wd.done{background:rgba(0,255,170,0.1);border-color:rgba(0,255,170,0.3);color:var(--suc)}
+.wd.curr{background:rgba(181,123,255,0.12);border-color:var(--acc);color:var(--acc);box-shadow:0 0 10px rgba(181,123,255,0.2)}
+.wd.lock{background:var(--border3);color:var(--text3)}
+.dash-bottom{display:grid;grid-template-columns:1.5fr 1fr;gap:14px}
+.wk-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;animation:fadeUp 0.4s 0.3s ease both}
+.wk-card.is-curr{border-color:rgba(181,123,255,0.4);box-shadow:0 0 24px rgba(181,123,255,0.07)}
+.wk-head{padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;border-bottom:1px solid var(--border)}
+.wk-num{font-family:var(--mono);font-size:11px;font-weight:700;width:38px;height:38px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--border2);color:var(--text3)}
+.wk-num.c{border-color:var(--acc);color:var(--acc);background:rgba(181,123,255,0.08)}
+.wk-num.d{border-color:rgba(0,255,170,0.3);color:var(--suc);background:rgba(0,255,170,0.07)}
+.wk-title{font-family:var(--serif);font-size:14px;font-weight:700;letter-spacing:-0.01em;margin-bottom:2px}
+.wk-sub{font-size:11px;color:var(--text2)}
+.wk-pill{font-family:var(--mono);font-size:9px;padding:3px 8px;border-radius:3px;border:1px solid;letter-spacing:0.06em;white-space:nowrap}
+.wk-pill.c{border-color:rgba(181,123,255,0.4);color:var(--acc);background:rgba(181,123,255,0.08)}
+.wk-pill.d{border-color:rgba(0,255,170,0.3);color:var(--suc)}
+.wk-pill.l{border-color:var(--border2);color:var(--text3)}
+.chevron{font-size:12px;color:var(--text3);margin-left:auto;transition:transform 0.2s;flex-shrink:0}
+.score-sidebar{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:16px;animation:fadeUp 0.4s 0.35s ease both}
+.sidebar-title{font-family:var(--serif);font-size:14px;font-weight:700;letter-spacing:-0.01em;margin-bottom:14px}
+.srow{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border3)}
+.srow:last-child{border-bottom:none}
+.sw{font-family:var(--mono);font-size:9px;color:var(--text3);width:24px}
+.sbw{flex:1;height:3px;background:var(--border3);border-radius:2px;overflow:hidden}
+.sbf{height:100%;border-radius:2px;transition:width 1s ease}
+.sn{font-family:var(--mono);font-size:9px;width:30px;text-align:right}
+.course-header{margin-bottom:18px}
+.course-header h2{font-family:var(--serif);font-size:22px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px}
+.course-header p{font-size:12px;color:var(--text2)}
+.month-label-div{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;color:var(--text3);text-transform:uppercase;padding:14px 0 6px;border-top:1px solid var(--border);margin-top:8px}
+.month-label-div:first-of-type{border-top:none;margin-top:0;padding-top:0}
+.course-wk{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid var(--border);border-radius:var(--r);margin-bottom:6px;cursor:pointer;transition:all 0.15s;background:var(--bg2)}
+.course-wk:hover{border-color:var(--border2);background:var(--bg3)}
+.course-wk.is-curr{border-color:rgba(181,123,255,0.4)}
+.cw-n{font-family:var(--mono);font-size:10px;font-weight:700;width:28px;flex-shrink:0}
+.cw-n.d{color:var(--suc)}.cw-n.c{color:var(--acc)}.cw-n.l{color:var(--text3)}
+.cw-t{flex:1;font-size:13px;font-weight:500}
+.scores-header{margin-bottom:18px}
+.scores-header h2{font-family:var(--serif);font-size:22px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px}
+.scores-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.score-detail-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:16px}
+.sdc-title{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px}
+.all-score-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border3)}
+.all-score-row:last-child{border-bottom:none}
+.asr-week{font-family:var(--mono);font-size:10px;color:var(--text2);width:80px;flex-shrink:0}
+.asr-bar{flex:1;height:6px;background:var(--border3);border-radius:3px;overflow:hidden}
+.asr-fill{height:100%;border-radius:3px}
+.asr-score{font-family:var(--mono);font-size:10px;width:36px;text-align:right}
+.asr-pill{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:3px;border:1px solid;width:50px;text-align:center}
+.week-detail{display:none;position:fixed;inset:0;z-index:200;background:var(--bg);overflow-y:auto;animation:fadeIn 0.2s ease;padding:0}
+.week-detail.open{display:block}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.wd-inner{max-width:100%;padding:28px 40px}
+.wd-back{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.06em;cursor:pointer;display:inline-flex;align-items:center;gap:6px;margin-bottom:20px;padding:6px 12px;border:1px solid var(--border);border-radius:4px;transition:all 0.15s}
+.wd-back:hover{color:var(--acc);border-color:rgba(181,123,255,0.4)}
+.wd-week-label{font-family:var(--mono);font-size:10px;color:var(--acc);letter-spacing:0.1em;margin-bottom:6px}
+.wd-title{font-family:var(--serif);font-size:26px;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px}
+.wd-month{font-size:12px;color:var(--text2);margin-bottom:16px}
+.wd-tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);margin-bottom:18px}
+.wdt{padding:10px 16px;font-family:var(--mono);font-size:10px;letter-spacing:0.06em;border:none;background:none;cursor:pointer;color:var(--text3);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.15s}
+.wdt.active{color:var(--acc);border-bottom-color:var(--acc)}
+.wd-pane{display:none}
+.wd-pane.active{display:block}
+.lesson-intro{font-family:var(--serif);font-size:15px;font-style:italic;color:var(--text2);border-left:2px solid var(--acc);padding-left:14px;margin-bottom:18px;line-height:1.7}
+.lesson-section{margin-bottom:20px}
+.ls-title{font-family:var(--mono);font-size:10px;color:var(--acc);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.ls-body{font-size:13px;color:var(--text2);line-height:1.85}
+.ls-body p{margin-bottom:12px}
+.ls-body p:last-child{margin-bottom:0}
+.ls-body strong{color:var(--text);font-weight:500}
+.ls-body code{font-family:var(--mono);font-size:11px;background:var(--border3);padding:1px 5px;border-radius:3px;color:var(--acc)}
+.analogy{background:rgba(232,197,71,0.06);border:1px solid rgba(232,197,71,0.2);border-radius:var(--r);padding:12px 14px;margin:12px 0;font-size:12px;color:var(--text2);line-height:1.7}
+.analogy::before{content:'ANALOGY  ';font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:0.1em;display:block;margin-bottom:6px}
+.key-term{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--border3)}
+.key-term:last-child{border-bottom:none}
+.kt-k{font-family:var(--mono);font-size:10px;color:var(--acc);width:130px;flex-shrink:0;padding-top:1px;letter-spacing:0.02em}
+.kt-v{font-size:12px;color:var(--text2);line-height:1.6}
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border3)}
+.task-item:last-child{border-bottom:none}
+.tcheck{width:16px;height:16px;border:1px solid var(--border2);border-radius:3px;flex-shrink:0;margin-top:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:9px;transition:all 0.15s}
+.tcheck.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.tcheck.on::after{content:'✓'}
+.task-txt{font-size:12px;color:var(--text);line-height:1.5;font-weight:500}
+.task-txt.done{color:var(--text3);text-decoration:line-through}
+.task-desc{font-size:11px;color:var(--text3);margin-top:3px;line-height:1.5}
+.question{margin-bottom:18px}
+.q-text{font-family:var(--serif);font-size:13px;margin-bottom:10px;color:var(--text);line-height:1.6;font-style:italic}
+.q-num{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.08em;margin-bottom:6px}
+.opt{padding:9px 13px;border-radius:4px;border:1px solid var(--border2);font-size:12px;margin-bottom:5px;cursor:pointer;transition:all 0.15s;color:var(--text2)}
+.opt:hover{background:rgba(255,255,255,0.03);color:var(--text)}
+.opt.sel{border-color:var(--acc);color:var(--acc);background:rgba(181,123,255,0.07)}
+.opt.right{border-color:var(--suc);color:var(--suc);background:rgba(0,255,170,0.05)}
+.opt.wrong{border-color:var(--red);color:var(--red);background:rgba(255,68,102,0.05)}
+.short-q textarea{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:var(--sans);font-size:12px;padding:10px 12px;resize:vertical;min-height:70px;line-height:1.5}
+.short-q textarea:focus{outline:none;border-color:var(--acc)}
+.test-btn{width:100%;padding:11px;margin-top:14px;background:transparent;border:1px solid var(--acc);color:var(--acc);font-family:var(--mono);font-size:11px;letter-spacing:0.08em;border-radius:4px;cursor:pointer;transition:all 0.2s}
+.test-btn:hover{background:rgba(181,123,255,0.1)}
+.score-result{text-align:center;padding:16px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);margin-top:14px}
+.score-result .big{font-family:var(--mono);font-size:32px;font-weight:700;color:var(--acc)}
+.score-result .verdict{font-size:12px;color:var(--text2);margin-top:4px}
+.score-result.pass .big{color:var(--suc)}
+.score-result.fail .big{color:var(--red)}
+.res-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border3)}
+.res-item:last-child{border-bottom:none}
+.res-tag{font-family:var(--mono);font-size:9px;padding:3px 7px;border-radius:3px;border:1px solid var(--border2);color:var(--text3);flex-shrink:0;letter-spacing:0.05em;margin-top:2px}
+.res-name{font-size:12px;color:var(--text);margin-bottom:2px;font-weight:500}
+.res-desc{font-size:11px;color:var(--text3);line-height:1.5}
+@media(max-width:600px){
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .dash-bottom{grid-template-columns:1fr}
+  .weeks-dots{grid-template-columns:repeat(8,1fr)}
+  .scores-grid{grid-template-columns:1fr}
+  nav{padding:10px 14px;flex-wrap:wrap;gap:8px}
+  .view{padding:14px}
+  .wd-inner{padding:14px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="glow"></div>
+<nav>
+  <div class="brand">A·I <span>Pathway</span></div>
+  <div class="nav-tabs">
+    <button class="ntab active" onclick="showView('dashboard')">DASHBOARD</button>
+    <button class="ntab" onclick="showView('course')">COURSE</button>
+    <button class="ntab" onclick="showView('scores')">SCORES</button>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <div class="nav-info" id="nav-info">WEEK <span>01</span> / 24</div>
+    <button id="theme-btn" onclick="toggleTheme()" title="Toggle light/dark theme" style="background:none;border:1px solid var(--border2);border-radius:4px;color:var(--text2);cursor:pointer;font-family:var(--mono);font-size:11px;padding:5px 10px;letter-spacing:0.04em;transition:all 0.15s;display:flex;align-items:center;gap:5px">
+      <span id="theme-icon">☀</span><span id="theme-label">LIGHT</span>
+    </button>
+  </div>
+</nav>
+<main>
+  <div class="view active" id="view-dashboard">
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-l">Completion</div><div class="stat-v" id="stat-pct">0%</div><div class="stat-sub" id="stat-weeks">0 of 24 weeks</div></div>
+      <div class="stat-card"><div class="stat-l">Avg Score</div><div class="stat-v g" id="stat-avg">—</div><div class="stat-sub">out of 10</div></div>
+      <div class="stat-card"><div class="stat-l">Tests Passed</div><div class="stat-v gold" id="stat-passed">0</div><div class="stat-sub">pass mark 6/10</div></div>
+      <div class="stat-card"><div class="stat-l">Current Week</div><div class="stat-v" id="stat-curr">W1</div><div class="stat-sub" id="stat-curr-title">AI Fundamentals</div></div>
+    </div>
+    <div class="prog-card">
+      <div class="pc-head"><span class="pc-title">Course Timeline</span><span class="pc-pct" id="prog-pct-label">0% complete</span></div>
+      <div class="track"><div class="fill" id="prog-fill" style="width:0%"></div></div>
+      <div class="month-row">
+        <span class="ml">M1 FOUND.</span><span class="ml">M2 ML</span><span class="ml">M3 DEEP L.</span>
+        <span class="ml">M4 LLMs</span><span class="ml">M5 BUILD</span><span class="ml">M6 CAP.</span>
+      </div>
+      <div class="weeks-dots" id="weeks-dots"></div>
+    </div>
+    <div class="dash-bottom">
+      <div id="dash-current-week"></div>
+      <div class="score-sidebar">
+        <div class="sidebar-title">Test Scores</div>
+        <div id="score-sidebar-list"></div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text3);text-align:center;margin-top:12px;padding-top:10px;border-top:1px solid var(--border3)">Complete tests to see scores</div>
+      </div>
+    </div>
+  </div>
+  <div class="view" id="view-course">
+    <div class="course-header"><h2>All 24 Weeks</h2><p>Tap any week to open the full lesson — notes, tasks, test, and resources.</p></div>
+    <div id="course-list"></div>
+  </div>
+  <div class="view" id="view-scores">
+    <div class="scores-header"><h2>Your Test Scores</h2></div>
+    <div class="scores-grid">
+      <div class="score-detail-card"><div class="sdc-title">Overview Stats</div><div id="scores-stats"></div></div>
+      <div class="score-detail-card"><div class="sdc-title">Pass Rate</div><div id="scores-passrate"></div></div>
+    </div>
+    <div class="score-detail-card" style="margin-bottom:20px"><div class="sdc-title">All Scores</div><div id="all-scores-list"></div></div>
+  </div>
+</main>
+<div class="week-detail" id="week-modal">
+  <div class="wd-inner">
+    <div class="wd-back" onclick="closeModal()">← BACK</div>
+    <div class="wd-week-label" id="modal-week-label">WEEK 01</div>
+    <div class="wd-title" id="modal-title">—</div>
+    <div class="wd-month" id="modal-month">—</div>
+    <div class="wd-tabs">
+      <button class="wdt active" onclick="switchModalTab('notes',this)">NOTES</button>
+      <button class="wdt" onclick="switchModalTab('tasks',this)">TASKS</button>
+      <button class="wdt" onclick="switchModalTab('test',this)">TEST</button>
+      <button class="wdt" onclick="switchModalTab('resources',this)">RESOURCES</button>
+    </div>
+    <div class="wd-pane active" id="modal-notes"></div>
+    <div class="wd-pane" id="modal-tasks"></div>
+    <div class="wd-pane" id="modal-test"></div>
+    <div class="wd-pane" id="modal-resources"></div>
+  </div>
+</div>
+</div>
+<script>
+const WEEKS = [
+{
+  n:1,title:"AI Fundamentals",month:"Month 1 \u2014 Foundations",
+  notes:`<p class="lesson-intro">Welcome. We start from absolute zero, together. Do not worry if you have never studied this before.</p>
+<div class="lesson-section"><div class="ls-title">What is Artificial Intelligence?</div><div class="ls-body">
+<p><strong>AI means building computer programs that can do things which normally need human thinking to get right.</strong></p>
+<p>Things like recognising a friend's face, understanding speech, translating language, deciding if an email is spam. These all happen automatically today, thanks to AI.</p>
+<p>The key difference from normal programs: a normal program follows rules a programmer wrote down. AI is different — <strong>it learns the rules itself by studying thousands of examples.</strong></p>
+</div></div>
+<div class="analogy">Teaching a child to recognise cats: you would not write a rulebook. You show them thousands of pictures: "cat... not a cat... cat." Eventually they build an intuition. AI works exactly this way — learning from examples, not from rules someone wrote.</div>
+<div class="lesson-section"><div class="ls-title">The Three Types of AI</div><div class="ls-body">
+<div class="key-term"><span class="kt-k">Narrow AI</span><span class="kt-v">Brilliant at ONE specific job, cannot do anything else. This is the ONLY type that exists today. Your face unlock: extraordinary at faces, but has no idea how to write a poem.</span></div>
+<div class="key-term"><span class="kt-k">General AI (AGI)</span><span class="kt-v">Hypothetical AI that could do ANY intellectual task a human can. Does not exist yet. Nobody has built it.</span></div>
+<div class="key-term"><span class="kt-k">Superintelligence</span><span class="kt-v">Theoretical AI smarter than all humans combined. Discussed by safety researchers. Does not exist.</span></div>
+</div></div>
+<div class="lesson-section"><div class="ls-title">The Three Ways Machines Learn</div><div class="ls-body">
+<p><strong>Supervised Learning:</strong> Learning with a teacher. You show the machine thousands of labelled examples with correct answers. "This is spam. This is not spam." The machine learns the pattern. Most common type of ML in the real world.</p>
+<p><strong>Unsupervised Learning:</strong> Exploring without a guide. You give raw data with no labels and the machine finds patterns itself. A music service grouping listeners by taste — not told what groups exist, it discovered them.</p>
+<p><strong>Reinforcement Learning:</strong> Learning by reward and penalty. Machine tries actions, gets a reward for good ones, penalty for bad. Over millions of trials, learns the best strategy. How AI mastered chess and video games.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Key Milestones</div><div class="ls-body">
+<p><strong>1950:</strong> Alan Turing asks "Can machines think?" — proposes the Turing Test. <strong>1956:</strong> Term "Artificial Intelligence" coined at Dartmouth Conference. <strong>2012:</strong> AlexNet proves deep learning works for images. <strong>2017:</strong> "Attention Is All You Need" — the Transformer is born. <strong>2022:</strong> ChatGPT launches — AI enters everyday life for hundreds of millions.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">AI In Your Life Right Now</div><div class="ls-body">
+<p>When your phone unlocks with your face — AI. When Gmail filters spam — AI. When Netflix suggests a show — AI. When a bank approves your loan in seconds — AI. When a doctor's scan is analysed — increasingly, AI. By the end of this course, you will understand how every single one of these works, properly, not just vaguely.</p>
+</div></div>`,
+  tasks:[{"t": "Watch '3Blue1Brown: But what is a neural network?' on YouTube", "d": "Search YouTube \u2014 first video in his Neural Networks playlist. 19 minutes. Watch it all even if confusing. It clicks later.", "done": false}, {"t": "List 10 AI systems you have personally used today", "d": "Go through your phone apps and daily services. Be specific \u2014 not just 'Google' but 'Google autocomplete'. Write them down.", "done": false}, {"t": "Read about one AI controversy online", "d": "Search 'AI bias news 2024' and read one article. Write 3 sentences: what went wrong, who was affected.", "done": false}, {"t": "Complete the Prior Knowledge Test in the Test tab", "d": "No pass or fail \u2014 just a baseline to see where you are starting from.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "What does AI stand for?", "opts": ["Automated Intelligence", "Artificial Intelligence", "Advanced Integration", "Automated Information"], "ans": 1}, {"type": "mcq", "q": "Which is an example of AI you might use every day?", "opts": ["A light switch", "A calculator", "A spam filter in your email", "A printed book"], "ans": 2}, {"type": "tf", "q": "Machine learning and artificial intelligence mean exactly the same thing.", "ans": false}, {"type": "mcq", "q": "Which type of AI exists in the real world today?", "opts": ["General AI", "Superintelligence", "Narrow AI", "All three equally"], "ans": 2}, {"type": "tf", "q": "Supervised learning uses labelled examples to learn.", "ans": true}, {"type": "mcq", "q": "In reinforcement learning, how does the machine improve?", "opts": ["By reading textbooks", "By receiving rewards for good actions", "By copying human movements", "By being given all correct answers"], "ans": 1}, {"type": "short", "q": "In your own words, explain the difference between a traditional program and how AI learns."}, {"type": "tf", "q": "The Transformer architecture (2017) was a major turning point in AI.", "ans": true}, {"type": "mcq", "q": "Which of these is NOT a real-world use of AI today?", "opts": ["Detecting cancer in scans", "Filtering spam email", "Teleporting physical objects", "Recommending films on Netflix"], "ans": 2}, {"type": "short", "q": "What is one thing about AI you most want to understand by the end of this course?"}]},
+  resources:[{"tag": "VIDEO", "name": "3Blue1Brown: But what is a neural network?", "desc": "The most beautiful visual explanation of neural networks. Start here."}, {"tag": "VIDEO", "name": "AI, Machine Learning, Deep Learning Explained \u2014 Google Cloud", "desc": "Clear 8-minute explainer on the difference between AI, ML, and deep learning."}, {"tag": "TOOL", "name": "Quick Draw! \u2014 experiments.withgoogle.com", "desc": "Draw something and an AI guesses in real time. Makes AI recognition feel tangible."}, {"tag": "ARTICLE", "name": "A Brief History of AI \u2014 MIT Technology Review", "desc": "Readable, well-researched 70-year history. No technical background needed."}]
+},
+{
+  n:2,title:"Python for AI",month:"Month 1 \u2014 Foundations",
+  notes:`<p class="lesson-intro">You already know Python. This week refreshes the specific tools the AI world runs on — the libraries and habits every AI practitioner uses daily.</p>
+<div class="lesson-section"><div class="ls-title">Why Python?</div><div class="ls-body">
+<p>The entire AI industry settled on Python because it is readable, flexible, and backed by an enormous community that has built thousands of ready-to-use AI tools. When a new technique is published in a research paper, a Python library appears within days. Speed matters less than you think — heavy computation happens inside the libraries, which are written in optimised C code anyway.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">NumPy — The Foundation</div><div class="ls-body">
+<p>NumPy is the most important AI library. It provides the <strong>array</strong> — a fast, efficient way to store and operate on large collections of numbers.</p>
+<p>Imagine one million numbers and you want to multiply every one by 2. With a Python list: a for loop, takes a second. With NumPy: write <code>array * 2</code>, done in milliseconds — because NumPy applies the operation to ALL elements simultaneously using optimised machine code. This difference becomes enormous when working with the millions of numbers inside a neural network.</p>
+<p>In AI, <strong>everything is eventually a number</strong>. An image is a grid of pixel brightness values. A word becomes a list of numbers (an embedding). A model's prediction is a number. NumPy stores and manipulates all of these efficiently.</p>
+</div></div>
+<div class="analogy">A Python list is like carrying groceries one item at a time. NumPy is like using a trolley that carries everything at once. Same destination, completely different speed.</div>
+<div class="lesson-section"><div class="ls-title">Pandas — Your Data Workbench</div><div class="ls-body">
+<p>Before building any model, you need to understand your data — loading it, exploring it, cleaning it. Pandas gives you the <strong>DataFrame</strong>, which works like a spreadsheet inside Python code.</p>
+<p>Imagine a CSV file with 10,000 rows of customer data. With Pandas: load in one line, see first rows instantly, check for missing values, filter by age, calculate averages per group — all in a few lines. Every AI project starts with exactly this kind of exploration. Key commands: <code>pd.read_csv()</code>, <code>df.head()</code>, <code>df.describe()</code>, <code>df.isnull().sum()</code>.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Matplotlib and Seaborn — Seeing Your Data</div><div class="ls-body">
+<p>One of the most important AI habits: <strong>visualise your data before building anything</strong>. A chart reveals patterns that would take hours to spot in raw numbers. Matplotlib is the foundation — any chart you can imagine. Seaborn builds on it with more beautiful statistical charts. You will use histograms (distributions), scatter plots (relationships), and heatmaps (correlations).</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Google Colab — Your Free AI Laboratory</div><div class="ls-body">
+<p>Google Colab is a free, cloud-based coding environment in your browser. No installation needed. It gives you a Jupyter Notebook — write Python in "cells" and run each cell individually, seeing results immediately below.</p>
+<p>The extraordinary thing: free access to a <strong>GPU</strong>. Training a deep learning model on a regular CPU might take 8 hours. On a Colab GPU: 15 minutes. Completely free. To enable: Runtime → Change Runtime Type → select GPU.</p>
+</div></div>`,
+  tasks:[{"t": "Open Google Colab and run your first AI setup cell", "d": "Go to colab.research.google.com. New notebook. Type: import numpy as np; import pandas as pd; import matplotlib.pyplot as plt; print('Ready!'). Run it. See 'Ready!' = you are set up.", "done": false}, {"t": "Load and explore a real dataset", "d": "In Colab: from sklearn.datasets import load_iris; import pandas as pd; df = pd.DataFrame(load_iris().data, columns=load_iris().feature_names); print(df.describe()). Read the output \u2014 what do the numbers tell you?", "done": false}, {"t": "Create your first data visualisation", "d": "Add a cell: import matplotlib.pyplot as plt; df.hist(figsize=(10,6)); plt.tight_layout(); plt.show(). Four histograms should appear. What do you notice about the distributions?", "done": false}, {"t": "Enable GPU in Colab and verify it works", "d": "Runtime \u2192 Change Runtime Type \u2192 GPU \u2192 Save. Then: import tensorflow as tf; print(tf.config.list_physical_devices('GPU')). If a GPU is listed, it is working.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "Why does the AI industry use Python over faster languages like C++?", "opts": ["Python runs faster than C++", "Python has an enormous ecosystem of ready-to-use AI tools and libraries", "Python was invented specifically for AI", "Python uses less memory"], "ans": 1}, {"type": "mcq", "q": "Why is a NumPy array faster than a Python list for maths operations?", "opts": ["NumPy arrays can only hold small amounts of data", "NumPy applies operations to all elements simultaneously using optimised machine code", "NumPy arrays are stored on the GPU automatically", "Python lists cannot store numbers"], "ans": 1}, {"type": "tf", "q": "A Pandas DataFrame works similarly to a spreadsheet, storing data in rows and columns.", "ans": true}, {"type": "mcq", "q": "What does df.describe() do in Pandas?", "opts": ["Deletes rows with missing values", "Shows a visual chart", "Returns statistical summaries like mean, min, max for each column", "Sorts the DataFrame alphabetically"], "ans": 2}, {"type": "tf", "q": "Google Colab requires you to install Python on your computer before using it.", "ans": false}, {"type": "mcq", "q": "Why is a GPU useful for AI training?", "opts": ["GPUs have more RAM than CPUs", "GPUs perform thousands of mathematical operations simultaneously, massively speeding up training", "GPUs are cheaper than CPUs", "GPUs are only needed for image recognition"], "ans": 1}, {"type": "mcq", "q": "What is a Jupyter Notebook cell?", "opts": ["A database table", "A small section of code you write and run individually, seeing results immediately", "A type of neural network layer", "A GPU memory allocation"], "ans": 1}, {"type": "tf", "q": "You should always visualise your data before building a model.", "ans": true}, {"type": "short", "q": "Explain why 'everything in AI is eventually a number.' Give one concrete example."}, {"type": "short", "q": "What is the difference between Matplotlib and Seaborn? When would you use each?"}]},
+  resources:[{"tag": "COURSE", "name": "Kaggle Learn: Python \u2014 kaggle.com/learn/python", "desc": "Free interactive Python for data science. About 5 hours. Perfect for solidifying the basics."}, {"tag": "COURSE", "name": "Kaggle Learn: Pandas \u2014 kaggle.com/learn/pandas", "desc": "Hands-on Pandas practice with real datasets. Excellent exercises."}, {"tag": "VIDEO", "name": "NumPy Tutorial by Sentdex \u2014 YouTube", "desc": "Practical NumPy tutorial from one of the best Python educators online."}, {"tag": "TOOL", "name": "Google Colab \u2014 colab.research.google.com", "desc": "Your primary coding environment for the whole course. Free GPU. No installation."}]
+},
+{
+  n:3,title:"Statistics & Probability",month:"Month 1 \u2014 Foundations",
+  notes:`<p class="lesson-intro">Machine learning is, at its heart, applied statistics. The more deeply you understand this week, the more naturally everything else will click.</p>
+<div class="lesson-section"><div class="ls-title">Mean, Median, and Mode</div><div class="ls-body">
+<p>When you have a collection of numbers, first question: what is the "typical" value? Three answers:</p>
+<p><strong>The mean</strong> is the average — add all values, divide by count. Simple, but sensitive to extreme outliers.</p>
+<p><strong>The median</strong> is the middle value when sorted. Much more robust to outliers.</p>
+<p><strong>The mode</strong> is the most common value. Most useful for categories.</p>
+</div></div>
+<div class="analogy">A street with nine £200,000 houses and one £10,000,000 mansion. Mean house price: over £1,000,000. Misleading. Median: £200,000. Honest. When data has extreme outliers, always look at the median.</div>
+<div class="lesson-section"><div class="ls-title">Variance and Standard Deviation</div><div class="ls-body">
+<p>Knowing the average is not enough — you need to know how spread out the values are. Two classes both averaging 70% on a test: one where everyone scored 65-75% (consistent), one where half scored 40% and half scored 100% (very spread). Same mean, completely different character.</p>
+<p><strong>Variance</strong> measures spread mathematically: average of squared distances from the mean. <strong>Standard deviation</strong> is the square root of variance — expressed in the same units as the data, making it easy to interpret.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Probability and Bayes' Theorem</div><div class="ls-body">
+<p>Probability measures how likely something is: 0 (impossible) to 1 (certain). When an AI model says an email is 0.97 spam, it is saying "I am 97% confident this is spam." Understanding probability is what lets you interpret model outputs and decide when to trust them.</p>
+<p><strong>Bayes' Theorem</strong> is the most important idea here. It tells you how to update your belief when you get new evidence. You start with a prior belief, observe evidence, and update accordingly.</p>
+</div></div>
+<div class="analogy">A medical test is 99% accurate. You test positive. Are you almost certainly ill? Not necessarily — it depends on how rare the disease is. If only 1 in 10,000 people have it, most positive tests are false positives. Bayes' Theorem calculates the actual probability. This counterintuitive result is called the base rate fallacy.</div>
+<div class="lesson-section"><div class="ls-title">The Normal Distribution</div><div class="ls-body">
+<p>Measure almost anything in nature — heights, weights, measurement errors — and you get the same shape: a symmetric bell curve, most values clustering around the middle with fewer values as you move out. This is the <strong>normal distribution</strong>. It appears so frequently that most ML algorithms assume data is normally distributed or work best when it is.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Correlation vs Causation</div><div class="ls-body">
+<p>This is the single most important critical thinking skill in data science. <strong>Correlation means two things tend to happen together. Causation means one actually causes the other.</strong> They are not the same.</p>
+<p>Ice cream sales and drowning deaths are positively correlated. Ice cream does not cause drowning — both are caused by hot weather. This hidden factor is called a <strong>confounding variable</strong>. AI systems are particularly vulnerable: if trained on biased historical data, they learn correlations and treat them as causal, with real harm as the result.</p>
+</div></div>`,
+  tasks:[{"t": "Calculate statistics on a real dataset in Python", "d": "In Colab, load the Iris dataset. Convert to DataFrame. Calculate mean, median, standard deviation for each feature. Which features have the most spread?", "done": false}, {"t": "Visualise a distribution", "d": "Plot a histogram of one feature. Is it bell-shaped (normal) or skewed? Add vertical lines for mean and median. Notice how far apart they are on a skewed distribution.", "done": false}, {"t": "Find a spurious correlation", "d": "Visit tylervigen.com/spurious-correlations. Browse 10 minutes. Pick your favourite and write a paragraph: (1) what the correlation is, (2) why it is not causal, (3) the likely real explanation.", "done": false}, {"t": "Implement Bayes Theorem in Python", "d": "Write a function bayes(prior, sensitivity, specificity) that calculates probability of disease given a positive test. Test it with prior=0.001, sensitivity=0.99, specificity=0.99. The answer will surprise you.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "One employee earns \u00a35,000,000. The other 99 earn about \u00a335,000. Which measure best represents a typical salary?", "opts": ["Mean \u2014 accounts for all salaries", "Median \u2014 not distorted by the extreme outlier", "Mode \u2014 the most common salary", "Standard deviation \u2014 measures spread"], "ans": 1}, {"type": "mcq", "q": "What does standard deviation tell you about a dataset?", "opts": ["The total sum of all values", "How far values are typically spread from the mean", "The probability of a value occurring", "The number of outliers"], "ans": 1}, {"type": "tf", "q": "A high variance means data points are tightly clustered around the mean.", "ans": false}, {"type": "mcq", "q": "Probability values always fall between which two numbers?", "opts": ["-1 and 1", "0 and 100", "0 and 1", "0 and 10"], "ans": 2}, {"type": "mcq", "q": "A test is 98% accurate. You test positive. Why might you still be unlikely to have the disease?", "opts": ["The test is not really 98% accurate", "The base rate is very low, so false positives outnumber true positives", "Doctors make mistakes", "Probability does not apply to medical tests"], "ans": 1}, {"type": "tf", "q": "The normal distribution is bell-shaped, symmetric around the mean.", "ans": true}, {"type": "mcq", "q": "Ice cream sales and drowning rates are correlated. What does this mean?", "opts": ["Ice cream causes drowning", "Drowning causes ice cream sales", "Both are caused by a third factor: hot weather", "Correlation proves causation here"], "ans": 2}, {"type": "tf", "q": "If two things are correlated, one must be causing the other.", "ans": false}, {"type": "short", "q": "Explain Bayes Theorem in plain English without using the formula. Use a real-world example of your own choosing."}, {"type": "short", "q": "Why is it dangerous to build an AI on data with historical biases, even if the correlations are real?"}]},
+  resources:[{"tag": "VIDEO", "name": "Bayes theorem, the geometry of changing beliefs \u2014 3Blue1Brown", "desc": "The most intuitive visual explanation of Bayes Theorem ever made. Watch it twice."}, {"tag": "VIDEO", "name": "StatQuest: Statistics Fundamentals playlist \u2014 YouTube", "desc": "Josh Starmer explains stats clearly and entertainingly. Start with Histograms."}, {"tag": "SITE", "name": "Seeing Theory \u2014 seeing-theory.brown.edu", "desc": "Beautiful interactive visualisations of probability concepts. 30 minutes here."}, {"tag": "SITE", "name": "Spurious Correlations \u2014 tylervigen.com", "desc": "Hilarious examples of real correlations that are obviously not causal."}]
+},
+{
+  n:4,title:"Linear Algebra & Calculus Basics",month:"Month 1 \u2014 Foundations",
+  notes:`<p class="lesson-intro">This week might feel like pure maths but stay with it. Every single operation inside a neural network is built on what you learn here. Understanding it gives you a window into what AI is actually doing.</p>
+<div class="lesson-section"><div class="ls-title">Vectors — Data as Points in Space</div><div class="ls-body">
+<p>A <strong>vector</strong> is simply an ordered list of numbers. That sounds plain, but it is one of the most powerful ideas in AI. You can represent almost anything as a vector — and once you have, you can do maths on it.</p>
+<p>A house as a vector: [3 bedrooms, 2 bathrooms, 120 sqm, 2 parking spaces]. Now you have 10,000 houses, each as a vector. You can find similar houses by measuring the mathematical distance between vectors. You can build a model predicting prices by learning relationships between these numbers.</p>
+<p>In AI, everything becomes a vector: images (pixel values), words (embeddings), audio (sampled amplitudes), customer profiles. Vectors are the universal language of machine learning.</p>
+</div></div>
+<div class="analogy">A vector is like GPS coordinates for data. Just as (51.5074, -0.1278) uniquely locates London in physical space, a vector uniquely locates a piece of data in mathematical space. Similar things have coordinates close to each other.</div>
+<div class="lesson-section"><div class="ls-title">Matrices — Data in Tables</div><div class="ls-body">
+<p>A <strong>matrix</strong> is a 2D grid of numbers — like a spreadsheet. The weights connecting two layers of a neural network are stored as a matrix. A dataset with 1000 examples and 20 features is a 1000-by-20 matrix.</p>
+<p><strong>Matrix multiplication</strong> is the core operation of all neural networks. Data multiplied by a weight matrix transforms it — stretching, rotating, compressing. Every forward pass through a network is a sequence of matrix multiplications. Important: matrix multiplication is NOT commutative. A×B ≠ B×A. Order matters enormously.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Derivatives and Gradients</div><div class="ls-body">
+<p>A <strong>derivative</strong> tells you the rate of change of a function — the slope at a specific point. In AI, the function we care about is the <strong>loss function</strong> — how wrong the model's predictions are. The derivative of the loss with respect to each weight tells us whether to increase or decrease that weight to reduce the loss. This is what makes learning possible.</p>
+<p>The <strong>gradient</strong> is the multi-dimensional derivative — a vector containing the derivative for every weight. It points in the direction of steepest increase. To reduce the loss, we step in the opposite direction.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Gradient Descent — How Neural Networks Learn</div><div class="ls-body">
+<p>Gradient descent uses gradients to train networks. Imagine blindfolded on a hilly landscape trying to find the lowest point. You feel the slope under your feet and take a step downhill. Feel again. Step again. Repeat until you cannot go lower.</p>
+<p>That is gradient descent — but in a mathematical space with millions of dimensions. The "slope" is the gradient. Each "step" updates all weights simultaneously.</p>
+<p>The step size is the <strong>learning rate</strong>. Too large: overshoot the valley, bouncing around or diverging. Too small: extremely slow progress. Finding the right learning rate is one of the key skills in training neural networks.</p>
+</div></div>
+<div class="analogy">Finding the lowest point in a dark room full of hills. You can only feel directly under your feet. Take small careful steps downhill. Giant leaps jump over the valley. Tiny shuffles take hours. The right step size — that is the learning rate.</div>`,
+  tasks:[{"t": "Visualise vectors in Python", "d": "In Colab: create two 2D vectors v1=np.array([2,3]) and v2=np.array([-1,4]). Plot them as arrows with plt.quiver(). Calculate dot product with np.dot(v1,v2). What does the result tell you?", "done": false}, {"t": "Practice matrix multiplication", "d": "Create two 2x2 matrices A and B. Calculate A@B then B@A. Confirm they are different. Also try A @ np.eye(2). What happens when you multiply by the identity matrix?", "done": false}, {"t": "Visualise gradient descent", "d": "Plot f(x)=x^2. Starting at x=4, take 20 gradient descent steps with learning rate 0.1. The gradient of x^2 is 2x. Plot the position at each step. Watch it descend to the minimum at x=0.", "done": false}, {"t": "Experiment with learning rates", "d": "Try learning rates of 0.01, 0.3, and 1.5 on the same gradient descent code. What happens with each? Write down what you observe. This intuition is crucial for training real models.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "In AI, what is a vector used to represent?", "opts": ["Only temperatures", "Almost any data \u2014 images, words, profiles \u2014 as an ordered list of numbers", "Only 2D map coordinates", "The number of layers in a network"], "ans": 1}, {"type": "tf", "q": "Matrix multiplication is commutative \u2014 A \u00d7 B always equals B \u00d7 A.", "ans": false}, {"type": "mcq", "q": "What does a derivative tell you about a function?", "opts": ["The total area under the function", "The rate of change (slope) at a specific point", "The maximum value the function can reach", "How many times it crosses zero"], "ans": 1}, {"type": "mcq", "q": "In neural network training, what is the gradient?", "opts": ["The number of training examples", "A vector telling how much the loss changes if we adjust each weight", "The learning rate multiplied by the loss", "The output of the final layer"], "ans": 1}, {"type": "tf", "q": "Gradient descent steps in the direction opposite to the gradient, because we want to decrease the loss.", "ans": true}, {"type": "mcq", "q": "What is the learning rate in gradient descent?", "opts": ["Number of examples per training step", "The size of each step in the direction of the negative gradient", "Speed at which the model processes data", "Rate of accuracy improvement per epoch"], "ans": 1}, {"type": "mcq", "q": "What happens if the learning rate is too high?", "opts": ["Training becomes extremely slow", "The model converges perfectly", "The model may overshoot the minimum, bouncing around or diverging", "Nothing \u2014 learning rate does not matter"], "ans": 2}, {"type": "tf", "q": "The loss function measures how wrong a model's predictions are.", "ans": true}, {"type": "short", "q": "Explain gradient descent as if describing it to someone who has never heard of it. Use the blindfolded hiker analogy or one of your own."}, {"type": "short", "q": "Why does the order of matrix multiplication matter? Give a real-world analogy where order matters."}]},
+  resources:[{"tag": "VIDEO", "name": "Essence of Linear Algebra \u2014 3Blue1Brown playlist", "desc": "The most beautiful explanation of linear algebra ever made. Watch all 15 episodes."}, {"tag": "VIDEO", "name": "Essence of Calculus \u2014 3Blue1Brown playlist", "desc": "Builds intuition for derivatives from first principles. Watch episodes 1-6."}, {"tag": "VIDEO", "name": "Gradient descent, how neural networks learn \u2014 3Blue1Brown", "desc": "Episode 2 of his neural networks series. Shows visually how gradient descent works."}, {"tag": "SITE", "name": "setosa.io/ev/ \u2014 Visual ML Explanations", "desc": "Interactive visual explanations of ML concepts including PCA and other linear algebra applications."}]
+},
+{
+  n:5,title:"Introduction to Machine Learning",month:"Month 2 \u2014 Machine Learning",
+  notes:`<p class="lesson-intro">Week 5: Introduction to Machine Learning. Full lesson notes below.</p>
+<div class="lesson-section"><div class="ls-title">Overview</div><div class="ls-body">
+<p>This week covers Introduction to Machine Learning as part of Month 2 — Machine Learning. Work through the concepts below carefully before attempting the tasks and test.</p>
+</div></div><div class="lesson-section"><div class="ls-title">What Machine Learning Actually Is</div><div class="ls-body">
+<p><strong>Machine learning is a way of programming computers where, instead of writing explicit rules, you train a system on examples until it discovers the rules itself.</strong></p>
+<p>Traditional programming: write instructions — "if the email contains 'free money' and 'click here', mark as spam." Works for known patterns, fails when spammers adapt. Machine learning: show the algorithm thousands of labelled spam and non-spam emails. It discovers patterns far more subtle than any human would write down. Then classifies new emails it has never seen.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">The ML Pipeline</div><div class="ls-body">
+<p><strong>Step 1: Define the problem.</strong> What exactly are you predicting? "Predict whether a customer cancels in 30 days with 80% accuracy" — specific and buildable. "Predict customer behaviour" — not useful.</p>
+<p><strong>Step 2: Collect data.</strong> Quality and quantity of data is the single biggest factor in model quality. Garbage in, garbage out.</p>
+<p><strong>Step 3: Prepare the data.</strong> Real data is messy — missing values, inconsistent categories, different scales. This typically takes more time than building the model. That is normal.</p>
+<p><strong>Step 4: EDA (Exploratory Data Analysis).</strong> Visualise the data, look for patterns and anomalies before building anything. This step frequently reveals problems that would silently ruin your model.</p>
+<p><strong>Steps 5-9: Choose model → Train → Evaluate → Tune → Deploy.</strong> Each step builds on the last.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Training, Validation, and Test Sets</div><div class="ls-body">
+<p><strong>Training set</strong> (70-80%): what the model learns from. <strong>Validation set</strong> (10-15%): used while developing — tune hyperparameters against this. <strong>Test set</strong> (10-20%): held back until the very end, used exactly once. The only truly honest measure of performance.</p>
+<p>Why three? If you use the test set during development, you start overfitting to it. Keeping it isolated prevents this.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Overfitting and Underfitting</div><div class="ls-body">
+<p><strong>Overfitting:</strong> model memorises training data including noise. Scores extremely well on training data, fails on new data. Like memorising past exam papers word-for-word.</p>
+<p><strong>Underfitting:</strong> model too simple to capture the pattern. Performs poorly on both training and new data. Like barely revising.</p>
+<p>The goal: <strong>generalisation</strong> — a model complex enough to learn real patterns but not so complex it memorises noise.</p>
+</div></div>
+<div class="analogy">Revising for a history exam. Memorising every word on past papers (overfitting): score perfectly on those papers, fail when questions are phrased differently. Barely looking at material (underfitting): fail everything. The right approach: understand the subject deeply enough to answer any reasonable question. That is generalisation.</div>`,
+  tasks:[{"t": "Complete Week 5 reading", "d": "Read through all the notes in this lesson carefully before attempting the tasks.", "done": false}, {"t": "Attempt the Week 5 practical exercise", "d": "Open Google Colab and work through the coding exercise for this topic. Search for the topic name plus 'tutorial' if you need guidance.", "done": false}, {"t": "Watch one video resource from the Resources tab", "d": "Choose one video from the Resources tab and watch it in full. Take notes on anything new.", "done": false}, {"t": "Complete the Week 5 End-of-Week Test", "d": "Attempt the test after completing the notes and tasks. Pass mark is 6/10.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "This is Week 5: Introduction to Machine Learning. Which month of the course does this belong to?", "opts": ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"], "ans": 1}, {"type": "short", "q": "Explain the most important concept from Week 5: Introduction to Machine Learning in plain English, as if you were explaining it to someone with no technical background."}, {"type": "short", "q": "What is one way that Introduction to Machine Learning is used in a real-world application? Describe the problem it solves and how it works."}]},
+  resources:[{"tag": "VIDEO", "name": "Introduction to Machine Learning explained \u2014 YouTube", "desc": "Search 'Introduction to Machine Learning explained beginners' on YouTube and watch the highest-rated result."}, {"tag": "DOCS", "name": "scikit-learn documentation \u2014 scikit-learn.org", "desc": "The best ML library documentation available. Clear examples for every algorithm."}]
+},
+{
+  n:6,title:"Supervised Learning",month:"Month 2 \u2014 Machine Learning",
+  notes:`<p class="lesson-intro">Week 6: Supervised Learning. Full lesson notes below.</p>
+<div class="lesson-section"><div class="ls-title">Overview</div><div class="ls-body">
+<p>This week covers Supervised Learning as part of Month 2 — Machine Learning. Work through the concepts below carefully before attempting the tasks and test.</p>
+</div></div><div class="lesson-section"><div class="ls-title">Regression vs Classification</div><div class="ls-body">
+<p><strong>Regression</strong>: predicting a continuous number. "What will this house sell for?" "How many units will we sell?" These are regression problems.</p>
+<p><strong>Classification</strong>: predicting a category. "Is this email spam?" "Does this X-ray show cancer?" "Is this transaction fraudulent?" Knowing which type you have is the first step in choosing an algorithm.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Key Algorithms</div><div class="ls-body">
+<p><strong>Linear Regression:</strong> fits a straight line through data. Simple, interpretable, fast. "Each bedroom adds £25,000 to price." Weakness: assumes linear relationships.</p>
+<p><strong>Decision Trees:</strong> learns a series of yes/no questions automatically from data. Highly interpretable — you can follow exactly why a decision was made. Weakness: can overfit badly.</p>
+<p><strong>Random Forests:</strong> collection of many decision trees, predictions combined by majority vote. Individual trees make different mistakes that cancel out when averaged. Often the best first algorithm to try on tabular data.</p>
+<p><strong>KNN (K-Nearest Neighbours):</strong> finds the K most similar training examples and votes among them. Simple, intuitive. Slow for large datasets — memorises all training data and searches it at prediction time.</p>
+<p><strong>SVM (Support Vector Machine):</strong> finds the decision boundary that maximises the margin (gap) between classes. Excellent for high-dimensional data.</p>
+</div></div>
+<div class="analogy">Random Forest: instead of asking one friend if a film is worth watching (one decision tree with unusual taste), you ask 500 people. Individual quirks cancel out. What remains is a reliable signal. That is exactly what a Random Forest does.</div>`,
+  tasks:[{"t": "Complete Week 6 reading", "d": "Read through all the notes in this lesson carefully before attempting the tasks.", "done": false}, {"t": "Attempt the Week 6 practical exercise", "d": "Open Google Colab and work through the coding exercise for this topic. Search for the topic name plus 'tutorial' if you need guidance.", "done": false}, {"t": "Watch one video resource from the Resources tab", "d": "Choose one video from the Resources tab and watch it in full. Take notes on anything new.", "done": false}, {"t": "Complete the Week 6 End-of-Week Test", "d": "Attempt the test after completing the notes and tasks. Pass mark is 6/10.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "This is Week 6: Supervised Learning. Which month of the course does this belong to?", "opts": ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"], "ans": 1}, {"type": "short", "q": "Explain the most important concept from Week 6: Supervised Learning in plain English, as if you were explaining it to someone with no technical background."}, {"type": "short", "q": "What is one way that Supervised Learning is used in a real-world application? Describe the problem it solves and how it works."}]},
+  resources:[{"tag": "VIDEO", "name": "Supervised Learning explained \u2014 YouTube", "desc": "Search 'Supervised Learning explained beginners' on YouTube and watch the highest-rated result."}, {"tag": "DOCS", "name": "scikit-learn documentation \u2014 scikit-learn.org", "desc": "The best ML library documentation available. Clear examples for every algorithm."}]
+},
+{
+  n:7,title:"Unsupervised Learning",month:"Month 2 \u2014 Machine Learning",
+  notes:`<p class="lesson-intro">Week 7: Unsupervised Learning. Full lesson notes below.</p>
+<div class="lesson-section"><div class="ls-title">Overview</div><div class="ls-body">
+<p>This week covers Unsupervised Learning as part of Month 2 — Machine Learning. Work through the concepts below carefully before attempting the tasks and test.</p>
+</div></div><div class="lesson-section"><div class="ls-title">What is Unsupervised Learning?</div><div class="ls-body">
+<p>Unsupervised learning finds patterns in data without labels and without correct answers. The machine must discover structure on its own. Businesses use it to discover customer segments they did not know existed. Scientists use it to find hidden structure in genetic data.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">K-Means Clustering</div><div class="ls-body">
+<p>The most widely used clustering algorithm. You tell it K (how many groups you want) and it divides data into K groups so each point belongs to the group whose centre is nearest.</p>
+<p>Steps: (1) Randomly place K centroids. (2) Assign each point to its nearest centroid. (3) Move each centroid to the average position of its assigned points. (4) Repeat until centroids stop moving. Usually converges in under 100 iterations.</p>
+<p>Challenge: you choose K yourself. Use the <strong>elbow method</strong>: run K-Means with K=1,2,3... and plot total within-cluster variance. The "elbow" — where improvement starts to slow — is usually a good K.</p>
+</div></div>
+<div class="analogy">200 papers scattered on a table. Create 4 random piles. For each paper, move it to the pile most similar to it. Recalculate average content of each pile. Repeat. Soon piles become coherent groups. That is K-Means.</div>
+<div class="lesson-section"><div class="ls-title">PCA — Simplifying Without Losing Information</div><div class="ls-body">
+<p>PCA (Principal Component Analysis) reduces the number of features while keeping as much information as possible. Why: fewer features means faster training; you cannot visualise 50 features but can visualise 2 or 3. PCA finds new directions through the data that capture the most variation — you keep the most informative ones and discard the rest.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Anomaly Detection</div><div class="ls-body">
+<p>Identifies unusual data points without being told in advance what "abnormal" looks like. The algorithm learns what "normal" is and flags deviations. Used in: fraud detection, equipment failure prediction, network security, medical monitoring.</p>
+</div></div>`,
+  tasks:[{"t": "Complete Week 7 reading", "d": "Read through all the notes in this lesson carefully before attempting the tasks.", "done": false}, {"t": "Attempt the Week 7 practical exercise", "d": "Open Google Colab and work through the coding exercise for this topic. Search for the topic name plus 'tutorial' if you need guidance.", "done": false}, {"t": "Watch one video resource from the Resources tab", "d": "Choose one video from the Resources tab and watch it in full. Take notes on anything new.", "done": false}, {"t": "Complete the Week 7 End-of-Week Test", "d": "Attempt the test after completing the notes and tasks. Pass mark is 6/10.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "This is Week 7: Unsupervised Learning. Which month of the course does this belong to?", "opts": ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"], "ans": 1}, {"type": "short", "q": "Explain the most important concept from Week 7: Unsupervised Learning in plain English, as if you were explaining it to someone with no technical background."}, {"type": "short", "q": "What is one way that Unsupervised Learning is used in a real-world application? Describe the problem it solves and how it works."}]},
+  resources:[{"tag": "VIDEO", "name": "Unsupervised Learning explained \u2014 YouTube", "desc": "Search 'Unsupervised Learning explained beginners' on YouTube and watch the highest-rated result."}, {"tag": "DOCS", "name": "scikit-learn documentation \u2014 scikit-learn.org", "desc": "The best ML library documentation available. Clear examples for every algorithm."}]
+},
+{
+  n:8,title:"Model Evaluation & Optimisation",month:"Month 2 \u2014 Machine Learning",
+  notes:`<p class="lesson-intro">Week 8: Model Evaluation & Optimisation. Full lesson notes below.</p>
+<div class="lesson-section"><div class="ls-title">Overview</div><div class="ls-body">
+<p>This week covers Model Evaluation & Optimisation as part of Month 2 — Machine Learning. Work through the concepts below carefully before attempting the tasks and test.</p>
+</div></div><div class="lesson-section"><div class="ls-title">Why Accuracy Alone Is Not Enough</div><div class="ls-body">
+<p>A model to detect a rare disease affecting 1 in 1000 people: simply predict "no disease" for everyone. Result: 99.9% accurate. But completely useless — never catches anyone who actually has it. Accuracy masked the failure. We need better metrics.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">The Confusion Matrix</div><div class="ls-body">
+<p><strong>True Positive (TP):</strong> Had disease, model correctly said positive.<br><strong>True Negative (TN):</strong> No disease, model correctly said negative.<br><strong>False Positive (FP):</strong> No disease, model incorrectly said positive — false alarm.<br><strong>False Negative (FN):</strong> Had disease, model incorrectly said negative — missed diagnosis.</p>
+<p>A cancer screening test would rather have many false alarms than miss a single real case. A court system would rather let a guilty person go free than convict an innocent one. Which error is worse depends entirely on context.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Precision and Recall</div><div class="ls-body">
+<p><strong>Precision:</strong> Of all positive predictions, what fraction were actually positive? TP ÷ (TP + FP). Use when false alarms are costly.</p>
+<p><strong>Recall:</strong> Of all actual positives, what fraction did the model catch? TP ÷ (TP + FN). Use when missing positives is costly.</p>
+<p>They are in tension — making the model more conservative raises precision but lowers recall. The <strong>F1-score</strong> is the harmonic mean of both: a single balanced metric.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Cross-Validation and Hyperparameter Tuning</div><div class="ls-body">
+<p><strong>K-fold cross-validation:</strong> divide data into K equal parts. Train and test K times, each time using a different part as test set. Average performance across all K evaluations — much more reliable than a single split.</p>
+<p><strong>Grid Search:</strong> tries every combination of specified hyperparameter values. Thorough but slow. <strong>Random Search:</strong> randomly samples combinations. Often finds equally good solutions faster.</p>
+</div></div>`,
+  tasks:[{"t": "Complete Week 8 reading", "d": "Read through all the notes in this lesson carefully before attempting the tasks.", "done": false}, {"t": "Attempt the Week 8 practical exercise", "d": "Open Google Colab and work through the coding exercise for this topic. Search for the topic name plus 'tutorial' if you need guidance.", "done": false}, {"t": "Watch one video resource from the Resources tab", "d": "Choose one video from the Resources tab and watch it in full. Take notes on anything new.", "done": false}, {"t": "Complete the Week 8 End-of-Week Test", "d": "Attempt the test after completing the notes and tasks. Pass mark is 6/10.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "This is Week 8: Model Evaluation & Optimisation. Which month of the course does this belong to?", "opts": ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"], "ans": 1}, {"type": "short", "q": "Explain the most important concept from Week 8: Model Evaluation & Optimisation in plain English, as if you were explaining it to someone with no technical background."}, {"type": "short", "q": "What is one way that Model Evaluation & Optimisation is used in a real-world application? Describe the problem it solves and how it works."}]},
+  resources:[{"tag": "VIDEO", "name": "Model Evaluation & Optimisation explained \u2014 YouTube", "desc": "Search 'Model Evaluation & Optimisation explained beginners' on YouTube and watch the highest-rated result."}, {"tag": "DOCS", "name": "scikit-learn documentation \u2014 scikit-learn.org", "desc": "The best ML library documentation available. Clear examples for every algorithm."}]
+},
+{
+  n:9,title:"Introduction to Neural Networks",month:"Month 3 \u2014 Deep Learning",
+  notes:`<p class="lesson-intro">Week 9: Introduction to Neural Networks. Full lesson notes below.</p>
+<div class="lesson-section"><div class="ls-title">Overview</div><div class="ls-body">
+<p>This week covers Introduction to Neural Networks as part of Month 3 — Deep Learning. Work through the concepts below carefully before attempting the tasks and test.</p>
+</div></div><div class="lesson-section"><div class="ls-title">What is a Neural Network?</div><div class="ls-body">
+<p>A neural network is a mathematical system loosely inspired by the brain. It consists of layers of mathematical units (artificial neurons) that receive numbers as input, process them, and pass numbers to the next layer. By stacking many layers and learning the right weights, it can compute almost any function — recognising faces, understanding speech, generating text.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">The Artificial Neuron</div><div class="ls-body">
+<p>A single neuron: (1) takes several inputs, (2) multiplies each by a <strong>weight</strong>, (3) sums them plus a <strong>bias</strong>, (4) passes through an <strong>activation function</strong>. The output flows to the next layer. Weights and biases are the parameters — adjusted during training. A large language model has hundreds of billions of these.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Activation Functions</div><div class="ls-body">
+<p>Without activation functions, stacking layers has no benefit — you could collapse them into one linear layer. Activations introduce <strong>non-linearity</strong>, allowing complex patterns.</p>
+<p><strong>ReLU:</strong> output = max(0, input). Simple, fast, avoids vanishing gradients. Default for hidden layers.<br><strong>Sigmoid:</strong> squashes to (0, 1). Good for binary classification output. Causes vanishing gradients in deep hidden layers.<br><strong>Softmax:</strong> converts numbers to a probability distribution summing to 1. Used in multi-class output layers.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">How a Neural Network Learns: The 4-Step Cycle</div><div class="ls-body">
+<p><strong>1. Forward Pass:</strong> data flows input → hidden layers → output → prediction.</p>
+<p><strong>2. Calculate Loss:</strong> loss function measures how wrong predictions are. Cross-entropy for classification, MSE for regression.</p>
+<p><strong>3. Backpropagation:</strong> chain rule of calculus computes gradient of loss with respect to EVERY weight. This tells us which direction to adjust each weight.</p>
+<p><strong>4. Update Weights:</strong> gradient descent nudges each weight in the direction that reduces loss. The learning rate controls step size.</p>
+<p>Repeat this cycle for thousands of batches and the weights converge to values that make accurate predictions.</p>
+</div></div>`,
+  tasks:[{"t": "Complete Week 9 reading", "d": "Read through all the notes in this lesson carefully before attempting the tasks.", "done": false}, {"t": "Attempt the Week 9 practical exercise", "d": "Open Google Colab and work through the coding exercise for this topic. Search for the topic name plus 'tutorial' if you need guidance.", "done": false}, {"t": "Watch one video resource from the Resources tab", "d": "Choose one video from the Resources tab and watch it in full. Take notes on anything new.", "done": false}, {"t": "Complete the Week 9 End-of-Week Test", "d": "Attempt the test after completing the notes and tasks. Pass mark is 6/10.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "This is Week 9: Introduction to Neural Networks. Which month of the course does this belong to?", "opts": ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"], "ans": 2}, {"type": "short", "q": "Explain the most important concept from Week 9: Introduction to Neural Networks in plain English, as if you were explaining it to someone with no technical background."}, {"type": "short", "q": "What is one way that Introduction to Neural Networks is used in a real-world application? Describe the problem it solves and how it works."}]},
+  resources:[{"tag": "VIDEO", "name": "Introduction to Neural Networks explained \u2014 YouTube", "desc": "Search 'Introduction to Neural Networks explained beginners' on YouTube and watch the highest-rated result."}, {"tag": "DOCS", "name": "scikit-learn documentation \u2014 scikit-learn.org", "desc": "The best ML library documentation available. Clear examples for every algorithm."}]
+},
+{
+  n:10,title:"Deep Learning Fundamentals",month:"Month 3 \u2014 Deep Learning",
+  notes:`<p class="lesson-intro">Week 10: Deep Learning Fundamentals. Full lesson notes below.</p>
+<div class="lesson-section"><div class="ls-title">Overview</div><div class="ls-body">
+<p>This week covers Deep Learning Fundamentals as part of Month 3 — Deep Learning. Work through the concepts below carefully before attempting the tasks and test.</p>
+</div></div><div class="lesson-section"><div class="ls-title">Why Go Deeper?</div><div class="ls-body">
+<p>Depth makes learning efficient. A deep network learning to recognise faces: layer 1 detects edges, layer 2 combines edges into shapes, layer 3 detects face parts, layer 4 recognises whole faces. Each layer builds on the previous, creating a hierarchy of increasingly abstract features. A shallow network would need enormous width to learn all these combinations simultaneously.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Batch Normalisation</div><div class="ls-body">
+<p>Training very deep networks is difficult because the distribution of activations shifts as lower layers change during training (internal covariate shift). Batch Normalisation normalises inputs to each layer to have zero mean and unit variance, then applies learned scaling. Result: more stable training, higher learning rates allowed, mild regularisation. Standard in almost every deep architecture.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Dropout</div><div class="ls-body">
+<p>Deep networks can memorise training data rather than learning general patterns. Dropout randomly "turns off" a fraction of neurons (20-50%) on each forward pass during training, forcing the network to learn robust features without over-relying on any single neuron. Turned off at inference — all neurons active, outputs scaled accordingly.</p>
+</div></div>
+<div class="analogy">Dropout: studying as a group where different members are randomly absent each session. You cannot rely on one person always remembering a topic. Everyone must understand everything independently. More robust group — more robust neural network.</div>
+<div class="lesson-section"><div class="ls-title">Adam Optimiser and Transfer Learning</div><div class="ls-body">
+<p><strong>Adam</strong> is the most widely used optimiser. It adapts the learning rate for each weight individually based on gradient history. Weights with consistent gradients get smaller learning rates; inconsistent ones get larger. Works well across a wide variety of problems with minimal tuning. Use Adam as your default.</p>
+<p><strong>Transfer Learning:</strong> reuse a model pre-trained on a large dataset as a starting point for your task. Lower layers learn general features useful everywhere — no need to relearn them. Fine-tune on your custom dataset with just hundreds or thousands of examples instead of millions.</p>
+</div></div>`,
+  tasks:[{"t": "Complete Week 10 reading", "d": "Read through all the notes in this lesson carefully before attempting the tasks.", "done": false}, {"t": "Attempt the Week 10 practical exercise", "d": "Open Google Colab and work through the coding exercise for this topic. Search for the topic name plus 'tutorial' if you need guidance.", "done": false}, {"t": "Watch one video resource from the Resources tab", "d": "Choose one video from the Resources tab and watch it in full. Take notes on anything new.", "done": false}, {"t": "Complete the Week 10 End-of-Week Test", "d": "Attempt the test after completing the notes and tasks. Pass mark is 6/10.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "This is Week 10: Deep Learning Fundamentals. Which month of the course does this belong to?", "opts": ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"], "ans": 2}, {"type": "short", "q": "Explain the most important concept from Week 10: Deep Learning Fundamentals in plain English, as if you were explaining it to someone with no technical background."}, {"type": "short", "q": "What is one way that Deep Learning Fundamentals is used in a real-world application? Describe the problem it solves and how it works."}]},
+  resources:[{"tag": "VIDEO", "name": "Deep Learning Fundamentals explained \u2014 YouTube", "desc": "Search 'Deep Learning Fundamentals explained beginners' on YouTube and watch the highest-rated result."}, {"tag": "DOCS", "name": "scikit-learn documentation \u2014 scikit-learn.org", "desc": "The best ML library documentation available. Clear examples for every algorithm."}]
+},
+{
+  n:11,title:"Computer Vision",month:"Month 3 \u2014 Deep Learning",
+  notes:`<p class="lesson-intro">Week 11: Computer Vision. Full lesson notes below.</p>
+<div class="lesson-section"><div class="ls-title">Overview</div><div class="ls-body">
+<p>This week covers Computer Vision as part of Month 3 — Deep Learning. Work through the concepts below carefully before attempting the tasks and test.</p>
+</div></div><div class="lesson-section"><div class="ls-title">How a Computer Sees an Image</div><div class="ls-body">
+<p>A digital image is a grid of pixels. Grayscale: each pixel is one number (0=black, 255=white). Colour: each pixel is three numbers (red, green, blue). A 256×256 colour image is a 3D array of 196,608 numbers. The challenge: turn that grid of numbers into meaningful understanding.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Convolutional Neural Networks (CNNs)</div><div class="ls-body">
+<p>Regular neural networks connecting every pixel to every neuron would create billions of redundant connections. CNNs exploit the spatial structure of images with <strong>weight sharing</strong>: a small filter (3×3 or 5×5 pixels) slides across the image, applying the same weights at every position. Same filter, every position — far fewer parameters. Learns features that work regardless of where they appear.</p>
+<p>Early filters detect edges and textures. Later layers detect shapes and object parts. Deepest layers respond to high-level concepts like "face," "wheel," "flower."</p>
+</div></div>
+<div class="analogy">Scanning a document for the letter A. You do not look at the whole page at once — you move your attention systematically, checking each position for that shape. A convolutional filter does exactly this: moves across the image looking for its learned pattern, reporting how strongly it is present at each position.</div>
+<div class="lesson-section"><div class="ls-title">Pooling, Famous Architectures, Vision Tasks</div><div class="ls-body">
+<p><strong>Max Pooling:</strong> divides feature maps into small regions, keeps only the maximum value. Reduces spatial size, makes detection robust to small translations.</p>
+<p><strong>AlexNet (2012):</strong> proved deep learning works for images — launched the revolution.<br><strong>ResNet (2015):</strong> introduced skip connections that allow very deep networks (50-150+ layers) to train without vanishing gradients.</p>
+<p><strong>Image Classification:</strong> what is the dominant object? <strong>Object Detection:</strong> where are all objects and what are they? <strong>Image Segmentation:</strong> classify every pixel.</p>
+</div></div>`,
+  tasks:[{"t": "Complete Week 11 reading", "d": "Read through all the notes in this lesson carefully before attempting the tasks.", "done": false}, {"t": "Attempt the Week 11 practical exercise", "d": "Open Google Colab and work through the coding exercise for this topic. Search for the topic name plus 'tutorial' if you need guidance.", "done": false}, {"t": "Watch one video resource from the Resources tab", "d": "Choose one video from the Resources tab and watch it in full. Take notes on anything new.", "done": false}, {"t": "Complete the Week 11 End-of-Week Test", "d": "Attempt the test after completing the notes and tasks. Pass mark is 6/10.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "This is Week 11: Computer Vision. Which month of the course does this belong to?", "opts": ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"], "ans": 2}, {"type": "short", "q": "Explain the most important concept from Week 11: Computer Vision in plain English, as if you were explaining it to someone with no technical background."}, {"type": "short", "q": "What is one way that Computer Vision is used in a real-world application? Describe the problem it solves and how it works."}]},
+  resources:[{"tag": "VIDEO", "name": "Computer Vision explained \u2014 YouTube", "desc": "Search 'Computer Vision explained beginners' on YouTube and watch the highest-rated result."}, {"tag": "DOCS", "name": "scikit-learn documentation \u2014 scikit-learn.org", "desc": "The best ML library documentation available. Clear examples for every algorithm."}]
+},
+{
+  n:12,title:"Natural Language Processing",month:"Month 3 \u2014 Deep Learning",
+  notes:`<p class="lesson-intro">Week 12: Natural Language Processing. Full lesson notes below.</p>
+<div class="lesson-section"><div class="ls-title">Overview</div><div class="ls-body">
+<p>This week covers Natural Language Processing as part of Month 3 — Deep Learning. Work through the concepts below carefully before attempting the tasks and test.</p>
+</div></div><div class="lesson-section"><div class="ls-title">The Challenge of Language</div><div class="ls-body">
+<p>Language is extraordinarily complex for a computer. Words have multiple meanings based on context ("bank"). Tone, sarcasm, and implication carry meaning never stated explicitly. Grammar varies across languages. NLP is the field that deals with all of this. Over the last decade it has been transformed by deep learning, particularly the Transformer.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Turning Text into Numbers</div><div class="ls-body">
+<p><strong>Tokenisation:</strong> splitting text into tokens (words, subwords, or characters). Modern models use subword tokenisation — rare words split into familiar pieces. "Unhappiness" → ["un","happ","iness"]. Model never encounters unknown words.</p>
+<p><strong>Bag of Words:</strong> count how many times each word appears, ignoring order entirely. Simple but loses context. Works surprisingly well for topic classification.</p>
+<p><strong>TF-IDF:</strong> weights words by frequency in the document AND rarity across all documents. Common words (the, is) get low weights. Distinctive words get high weights. Much more informative than Bag of Words.</p>
+<p><strong>Word Embeddings:</strong> dense vectors capturing semantic meaning. Words with similar meanings end up close together in vector space. "King" − "Man" + "Woman" ≈ "Queen". Learned purely from which words appear near each other.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Sequence Models</div><div class="ls-body">
+<p><strong>RNNs</strong> maintain a hidden state updated at each word. Struggle with long-range dependencies — information from 100 words earlier has been distorted through 100 memory updates.</p>
+<p><strong>LSTMs</strong> add gating mechanisms: forget gate (what to discard), input gate (what to add), output gate (what to output). Handle much longer sequences. Were dominant until the Transformer arrived.</p>
+</div></div>`,
+  tasks:[{"t": "Complete Week 12 reading", "d": "Read through all the notes in this lesson carefully before attempting the tasks.", "done": false}, {"t": "Attempt the Week 12 practical exercise", "d": "Open Google Colab and work through the coding exercise for this topic. Search for the topic name plus 'tutorial' if you need guidance.", "done": false}, {"t": "Watch one video resource from the Resources tab", "d": "Choose one video from the Resources tab and watch it in full. Take notes on anything new.", "done": false}, {"t": "Complete the Week 12 End-of-Week Test", "d": "Attempt the test after completing the notes and tasks. Pass mark is 6/10.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "This is Week 12: Natural Language Processing. Which month of the course does this belong to?", "opts": ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"], "ans": 2}, {"type": "short", "q": "Explain the most important concept from Week 12: Natural Language Processing in plain English, as if you were explaining it to someone with no technical background."}, {"type": "short", "q": "What is one way that Natural Language Processing is used in a real-world application? Describe the problem it solves and how it works."}]},
+  resources:[{"tag": "VIDEO", "name": "Natural Language Processing explained \u2014 YouTube", "desc": "Search 'Natural Language Processing explained beginners' on YouTube and watch the highest-rated result."}, {"tag": "DOCS", "name": "scikit-learn documentation \u2014 scikit-learn.org", "desc": "The best ML library documentation available. Clear examples for every algorithm."}]
+},
+{
+  n:13,title:"Transformers & Attention",month:"Month 4 \u2014 Large Language Models",
+  notes:`<p class="lesson-intro">Week 13: Transformers & Attention. Full lesson notes below.</p>
+<div class="lesson-section"><div class="ls-title">Overview</div><div class="ls-body">
+<p>This week covers Transformers & Attention as part of Month 4 — Large Language Models. Work through the concepts below carefully before attempting the tasks and test.</p>
+</div></div><div class="lesson-section"><div class="ls-title">The Problem Transformers Solved</div><div class="ls-body">
+<p>LSTMs had two critical problems: (1) sequential processing — could not parallelise training, (2) even with gating, struggled with very long-range dependencies. By the time you reach a pronoun 100 words in, the original noun it refers to has been diluted through dozens of memory updates.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Self-Attention — Looking at Everything at Once</div><div class="ls-body">
+<p>The core innovation: instead of processing words one at a time, self-attention allows every word to directly "look at" every other word simultaneously, computing a relevance score for each pair.</p>
+<p>"The trophy did not fit in the suitcase because it was too big." What does "it" refer to? Self-attention computes relevance between "it" and every other word — correctly attending strongly to "trophy."</p>
+<p>Technical mechanism: three learned matrices create <strong>Query</strong> ("what am I looking for?"), <strong>Key</strong> ("what do I offer?"), and <strong>Value</strong> ("what is my content?") vectors for each word. Attention score = dot product of Query with Key, normalised with softmax. Output = weighted average of Value vectors.</p>
+</div></div>
+<div class="analogy">Researching in a library. Query: your search question. Key: book titles and descriptions. Value: book content. When Query matches a Key, you pull out the Value. The Transformer does this for every word in a sentence, simultaneously, with every other word.</div>
+<div class="lesson-section"><div class="ls-title">Multi-Head Attention and Positional Encoding</div><div class="ls-body">
+<p><strong>Multi-head attention:</strong> runs multiple attention mechanisms in parallel (typically 8-16), each learning different relationship types — syntax, coreference, semantic similarity. Outputs concatenated and transformed.</p>
+<p><strong>Positional encoding:</strong> without it, "dog bites man" and "man bites dog" look identical (all words processed simultaneously). Positional encoding adds position-dependent signals so the network can distinguish word order.</p>
+<p><strong>Why it scaled:</strong> all positions processed in parallel = much faster training on modern hardware. Larger models almost always performed better — the "scaling law" that launched the race for ever-larger language models.</p>
+</div></div>`,
+  tasks:[{"t": "Complete Week 13 reading", "d": "Read through all the notes in this lesson carefully before attempting the tasks.", "done": false}, {"t": "Attempt the Week 13 practical exercise", "d": "Open Google Colab and work through the coding exercise for this topic. Search for the topic name plus 'tutorial' if you need guidance.", "done": false}, {"t": "Watch one video resource from the Resources tab", "d": "Choose one video from the Resources tab and watch it in full. Take notes on anything new.", "done": false}, {"t": "Complete the Week 13 End-of-Week Test", "d": "Attempt the test after completing the notes and tasks. Pass mark is 6/10.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "This is Week 13: Transformers & Attention. Which month of the course does this belong to?", "opts": ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"], "ans": 3}, {"type": "short", "q": "Explain the most important concept from Week 13: Transformers & Attention in plain English, as if you were explaining it to someone with no technical background."}, {"type": "short", "q": "What is one way that Transformers & Attention is used in a real-world application? Describe the problem it solves and how it works."}]},
+  resources:[{"tag": "VIDEO", "name": "Transformers & Attention explained \u2014 YouTube", "desc": "Search 'Transformers & Attention explained beginners' on YouTube and watch the highest-rated result."}, {"tag": "DOCS", "name": "scikit-learn documentation \u2014 scikit-learn.org", "desc": "The best ML library documentation available. Clear examples for every algorithm."}]
+},
+{
+  n:14,title:"How LLMs Work",month:"Month 4 \u2014 Large Language Models",
+  notes:`<p class="lesson-intro">Week 14: How LLMs Work. Full lesson notes below.</p>
+<div class="lesson-section"><div class="ls-title">Overview</div><div class="ls-body">
+<p>This week covers How LLMs Work as part of Month 4 — Large Language Models. Work through the concepts below carefully before attempting the tasks and test.</p>
+</div></div><div class="lesson-section"><div class="ls-title">Pre-Training — Learning From the Internet</div><div class="ls-body">
+<p>The model is trained on hundreds of billions to trillions of words from the internet, books, code, and papers. The training objective is deceptively simple: <strong>predict the next word (token)</strong>.</p>
+<p>To predict "Paris" follows "The capital of France is ___," the model must have learned that France is a country, countries have capitals, Paris is that capital. All world knowledge is compressed into the model's parameters by training it to predict text well.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">GPT Architecture (Decoder-Only)</div><div class="ls-body">
+<p>GPT uses only the Transformer decoder. It is <strong>autoregressive</strong> — generates one token at a time, each new token becoming part of the input for the next. Uses masked attention so each position only attends to previous positions — no "cheating" by looking at future tokens during training.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">BERT Architecture (Encoder-Only)</div><div class="ls-body">
+<p>BERT uses only the Transformer encoder, trained with masked language modelling: random words replaced with [MASK], model predicts what was masked. Reads bidirectionally — context from both directions. Excellent at understanding and representing text. Used for classification, NER, question answering.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Tokens and RLHF</div><div class="ls-body">
+<p><strong>Tokens:</strong> LLMs process subword tokens (~0.75 words each). Vocabulary: 50,000-100,000 tokens. At each step, the model outputs a probability distribution over all tokens and samples from it.</p>
+<p><strong>RLHF (Reinforcement Learning from Human Feedback):</strong> human evaluators compare pairs of model responses. A reward model learns from their preferences. The LLM is fine-tuned to produce responses rated highly by the reward model. This transforms a text predictor into a helpful, harmless assistant. How ChatGPT and Claude are made actually useful.</p>
+</div></div>`,
+  tasks:[{"t": "Complete Week 14 reading", "d": "Read through all the notes in this lesson carefully before attempting the tasks.", "done": false}, {"t": "Attempt the Week 14 practical exercise", "d": "Open Google Colab and work through the coding exercise for this topic. Search for the topic name plus 'tutorial' if you need guidance.", "done": false}, {"t": "Watch one video resource from the Resources tab", "d": "Choose one video from the Resources tab and watch it in full. Take notes on anything new.", "done": false}, {"t": "Complete the Week 14 End-of-Week Test", "d": "Attempt the test after completing the notes and tasks. Pass mark is 6/10.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "This is Week 14: How LLMs Work. Which month of the course does this belong to?", "opts": ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"], "ans": 3}, {"type": "short", "q": "Explain the most important concept from Week 14: How LLMs Work in plain English, as if you were explaining it to someone with no technical background."}, {"type": "short", "q": "What is one way that How LLMs Work is used in a real-world application? Describe the problem it solves and how it works."}]},
+  resources:[{"tag": "VIDEO", "name": "How LLMs Work explained \u2014 YouTube", "desc": "Search 'How LLMs Work explained beginners' on YouTube and watch the highest-rated result."}, {"tag": "DOCS", "name": "scikit-learn documentation \u2014 scikit-learn.org", "desc": "The best ML library documentation available. Clear examples for every algorithm."}]
+},
+{
+  n:15,title:"Prompt Engineering",month:"Month 4 \u2014 Large Language Models",
+  notes:`<p class="lesson-intro">Week 15: Prompt Engineering. Full lesson notes below.</p>
+<div class="lesson-section"><div class="ls-title">Overview</div><div class="ls-body">
+<p>This week covers Prompt Engineering as part of Month 4 — Large Language Models. Work through the concepts below carefully before attempting the tasks and test.</p>
+</div></div><div class="lesson-section"><div class="ls-title">What is a Prompt?</div><div class="ls-body">
+<p>A prompt is the text you send to a language model. The model generates its response based entirely on it. The same model with two different prompts can produce outputs that differ wildly in quality and usefulness. Prompt engineering is designing prompts to consistently get the outputs you need.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Prompting Strategies</div><div class="ls-body">
+<p><strong>Zero-shot:</strong> ask the model without examples. Works for tasks the model clearly knows from training. "Summarise this in three bullet points: [text]"</p>
+<p><strong>Few-shot:</strong> provide 2-5 examples before asking. Powerful for tasks with specific output formats. Shows the model exactly what you want by example.</p>
+<p><strong>Chain-of-thought:</strong> instruct the model to "think step by step" before answering. Causes intermediate reasoning steps to be generated as text, providing a platform for each subsequent step. Dramatically improves accuracy on maths, logic, and multi-step reasoning. Simply adding "Let's think step by step" works.</p>
+<p><strong>System prompt:</strong> frames the entire conversation before the user says anything. Defines role, tone, constraints, and context. "You are a helpful customer service assistant for TechCorp. Always be polite. Only answer questions about our products."</p>
+<p><strong>Role prompting:</strong> assign a persona. "You are a senior Python developer who values readable, well-documented code." Model adopts the vocabulary, perspective, and expertise of that role.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Temperature and Prompt Security</div><div class="ls-body">
+<p><strong>Temperature:</strong> 0 = deterministic/consistent (good for factual tasks). Higher = creative/varied (good for brainstorming). Too high produces incoherent rambling.</p>
+<p><strong>Prompt injection:</strong> malicious user input that attempts to override your system prompt. "Ignore all previous instructions..." Real security vulnerability for AI applications. Mitigate by marking user input as untrusted and instructing the model to detect injection attempts.</p>
+</div></div>`,
+  tasks:[{"t": "Complete Week 15 reading", "d": "Read through all the notes in this lesson carefully before attempting the tasks.", "done": false}, {"t": "Attempt the Week 15 practical exercise", "d": "Open Google Colab and work through the coding exercise for this topic. Search for the topic name plus 'tutorial' if you need guidance.", "done": false}, {"t": "Watch one video resource from the Resources tab", "d": "Choose one video from the Resources tab and watch it in full. Take notes on anything new.", "done": false}, {"t": "Complete the Week 15 End-of-Week Test", "d": "Attempt the test after completing the notes and tasks. Pass mark is 6/10.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "This is Week 15: Prompt Engineering. Which month of the course does this belong to?", "opts": ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"], "ans": 3}, {"type": "short", "q": "Explain the most important concept from Week 15: Prompt Engineering in plain English, as if you were explaining it to someone with no technical background."}, {"type": "short", "q": "What is one way that Prompt Engineering is used in a real-world application? Describe the problem it solves and how it works."}]},
+  resources:[{"tag": "VIDEO", "name": "Prompt Engineering explained \u2014 YouTube", "desc": "Search 'Prompt Engineering explained beginners' on YouTube and watch the highest-rated result."}, {"tag": "DOCS", "name": "scikit-learn documentation \u2014 scikit-learn.org", "desc": "The best ML library documentation available. Clear examples for every algorithm."}]
+},
+{
+  n:16,title:"Fine-Tuning & RAG",month:"Month 4 \u2014 Large Language Models",
+  notes:`<p class="lesson-intro">Week 16: Fine-Tuning & RAG. Full lesson notes below.</p>
+<div class="lesson-section"><div class="ls-title">Overview</div><div class="ls-body">
+<p>This week covers Fine-Tuning & RAG as part of Month 4 — Large Language Models. Work through the concepts below carefully before attempting the tasks and test.</p>
+</div></div><div class="lesson-section"><div class="ls-title">The Problem: General Models for Specific Tasks</div><div class="ls-body">
+<p>A legal firm wants an AI that can answer questions about their specific case history and internal policies that post-date the model's training. Two main approaches: teach the model (fine-tuning) or give it a reference book to look things up in (RAG).</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Fine-Tuning</div><div class="ls-body">
+<p>Continues training a pre-trained model on a smaller domain-specific dataset. Updates the model's weights. Best for: changing writing style or tone, domain-specific terminology, consistent output formats. Limitation: knowledge is "baked in" — if information changes, you retrain. Teaches the model how to behave more than what to know.</p>
+<p><strong>LoRA (Low-Rank Adaptation):</strong> freezes original weights, adds tiny trainable adapter matrices. Trains less than 1% of parameters while achieving 90%+ of full fine-tuning performance. Makes fine-tuning accessible without massive compute.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">RAG (Retrieval-Augmented Generation)</div><div class="ls-body">
+<p>Gives the model a searchable knowledge base at query time. Model weights unchanged. Steps: (1) split documents into chunks, (2) convert chunks to embeddings, (3) store in vector database, (4) user asks question → embed question → find similar chunks → insert as context → LLM generates grounded answer.</p>
+<p>Best for: frequently updated information, proprietary documents, reducing hallucination, providing citations. The knowledge base can be updated without retraining.</p>
+</div></div>
+<div class="analogy">Fine-tuning: sending your employee to university — they learn it permanently in their head. RAG: giving your employee a library they can look things up in before answering. For fast-changing information, library access is better. For deep expertise in how to reason and write, training is better.</div>`,
+  tasks:[{"t": "Complete Week 16 reading", "d": "Read through all the notes in this lesson carefully before attempting the tasks.", "done": false}, {"t": "Attempt the Week 16 practical exercise", "d": "Open Google Colab and work through the coding exercise for this topic. Search for the topic name plus 'tutorial' if you need guidance.", "done": false}, {"t": "Watch one video resource from the Resources tab", "d": "Choose one video from the Resources tab and watch it in full. Take notes on anything new.", "done": false}, {"t": "Complete the Week 16 End-of-Week Test", "d": "Attempt the test after completing the notes and tasks. Pass mark is 6/10.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "This is Week 16: Fine-Tuning & RAG. Which month of the course does this belong to?", "opts": ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"], "ans": 3}, {"type": "short", "q": "Explain the most important concept from Week 16: Fine-Tuning & RAG in plain English, as if you were explaining it to someone with no technical background."}, {"type": "short", "q": "What is one way that Fine-Tuning & RAG is used in a real-world application? Describe the problem it solves and how it works."}]},
+  resources:[{"tag": "VIDEO", "name": "Fine-Tuning & RAG explained \u2014 YouTube", "desc": "Search 'Fine-Tuning & RAG explained beginners' on YouTube and watch the highest-rated result."}, {"tag": "DOCS", "name": "scikit-learn documentation \u2014 scikit-learn.org", "desc": "The best ML library documentation available. Clear examples for every algorithm."}]
+},
+{
+  n:17,title:"LLM APIs & LangChain",month:"Month 5 \u2014 Building with AI",
+  notes:`<p class="lesson-intro">Week 17: LLM APIs & LangChain. Full lesson notes below.</p>
+<div class="lesson-section"><div class="ls-title">Overview</div><div class="ls-body">
+<p>This week covers LLM APIs & LangChain as part of Month 5 — Building with AI. Work through the concepts below carefully before attempting the tasks and test.</p>
+</div></div><div class="lesson-section"><div class="ls-title">What is an LLM API?</div><div class="ls-body">
+<p>An API (Application Programming Interface) lets your code send text to a language model on a server and receive its response. You do not run the model yourself. Major providers: OpenAI (GPT), Anthropic (Claude), Google (Gemini). You get access to frontier models without powerful hardware — you pay per token processed.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Practical API Considerations</div><div class="ls-body">
+<p><strong>API keys:</strong> keep secret, never commit to public repositories, store in environment variables.<br><strong>Cost:</strong> billed per token — think about prompt and generation length.<br><strong>Rate limits:</strong> providers limit requests per minute — add error handling.<br><strong>Latency:</strong> calls take 1-10 seconds — plan your UI accordingly.<br><strong>Data privacy:</strong> check terms before sending sensitive information.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">LangChain</div><div class="ls-body">
+<p>A Python framework that makes building complex AI applications much easier. Instead of writing boilerplate for every common pattern, LangChain provides ready-to-use abstractions.</p>
+<p><strong>Chains:</strong> connect a series of steps (prompt template → LLM call → output parser). Output of each step feeds into the next.</p>
+<p><strong>Memory:</strong> LLMs are stateless — forget everything between API calls. LangChain's memory classes maintain conversation history and insert it into each prompt, enabling multi-turn conversations.</p>
+<p><strong>LangSmith:</strong> monitoring and debugging platform. Logs every LLM call, shows exact inputs/outputs, traces chain execution. Invaluable once you are building real applications.</p>
+</div></div>`,
+  tasks:[{"t": "Complete Week 17 reading", "d": "Read through all the notes in this lesson carefully before attempting the tasks.", "done": false}, {"t": "Attempt the Week 17 practical exercise", "d": "Open Google Colab and work through the coding exercise for this topic. Search for the topic name plus 'tutorial' if you need guidance.", "done": false}, {"t": "Watch one video resource from the Resources tab", "d": "Choose one video from the Resources tab and watch it in full. Take notes on anything new.", "done": false}, {"t": "Complete the Week 17 End-of-Week Test", "d": "Attempt the test after completing the notes and tasks. Pass mark is 6/10.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "This is Week 17: LLM APIs & LangChain. Which month of the course does this belong to?", "opts": ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"], "ans": 4}, {"type": "short", "q": "Explain the most important concept from Week 17: LLM APIs & LangChain in plain English, as if you were explaining it to someone with no technical background."}, {"type": "short", "q": "What is one way that LLM APIs & LangChain is used in a real-world application? Describe the problem it solves and how it works."}]},
+  resources:[{"tag": "VIDEO", "name": "LLM APIs & LangChain explained \u2014 YouTube", "desc": "Search 'LLM APIs & LangChain explained beginners' on YouTube and watch the highest-rated result."}, {"tag": "DOCS", "name": "scikit-learn documentation \u2014 scikit-learn.org", "desc": "The best ML library documentation available. Clear examples for every algorithm."}]
+},
+{
+  n:18,title:"AI Agents & Automation",month:"Month 5 \u2014 Building with AI",
+  notes:`<p class="lesson-intro">Week 18: AI Agents & Automation. Full lesson notes below.</p>
+<div class="lesson-section"><div class="ls-title">Overview</div><div class="ls-body">
+<p>This week covers AI Agents & Automation as part of Month 5 — Building with AI. Work through the concepts below carefully before attempting the tasks and test.</p>
+</div></div><div class="lesson-section"><div class="ls-title">What Makes Something an Agent?</div><div class="ls-body">
+<p>An AI agent has four properties distinguishing it from a chatbot: (1) a <strong>goal</strong> — a task to accomplish, not just a question to answer; (2) can <strong>observe</strong> its environment — read files, search the web, query APIs; (3) can take <strong>actions</strong> — write code and run it, send emails, create files; (4) has a <strong>decision process</strong> — decides what to do next based on observations.</p>
+<p>The LLM is the "brain" deciding what to do. Tools are the "hands" that actually affect the world.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">The ReAct Framework</div><div class="ls-body">
+<p>ReAct (Reasoning and Acting) alternates between Thought (reasoning) and Action (taking a step), observing results and incorporating them into the next thought.</p>
+<p>Example for "What is the UK population and how does it compare to 10 years ago?": Thought: I need current UK population → Action: web_search("UK population 2024") → Observation: 67.7 million → Thought: Now I need 2014 → Action: web_search("UK population 2014") → Observation: 64.6 million → Thought: I can calculate now → Action: calculate("67.7-64.6") → Final Answer: increased by 3.1 million (4.8%).</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Agent Safety</div><div class="ls-body">
+<p>Autonomous agents can cause real harm. Core safety principles: <strong>Minimal footprint</strong> — only access what is genuinely needed. <strong>Human approval gates</strong> — for any irreversible action (sending email, deleting file), require explicit human confirmation first. <strong>Comprehensive logging</strong> — record every action with full context. <strong>Sandboxed testing</strong> — test in isolated environments before giving real-world access.</p>
+</div></div>`,
+  tasks:[{"t": "Complete Week 18 reading", "d": "Read through all the notes in this lesson carefully before attempting the tasks.", "done": false}, {"t": "Attempt the Week 18 practical exercise", "d": "Open Google Colab and work through the coding exercise for this topic. Search for the topic name plus 'tutorial' if you need guidance.", "done": false}, {"t": "Watch one video resource from the Resources tab", "d": "Choose one video from the Resources tab and watch it in full. Take notes on anything new.", "done": false}, {"t": "Complete the Week 18 End-of-Week Test", "d": "Attempt the test after completing the notes and tasks. Pass mark is 6/10.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "This is Week 18: AI Agents & Automation. Which month of the course does this belong to?", "opts": ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"], "ans": 4}, {"type": "short", "q": "Explain the most important concept from Week 18: AI Agents & Automation in plain English, as if you were explaining it to someone with no technical background."}, {"type": "short", "q": "What is one way that AI Agents & Automation is used in a real-world application? Describe the problem it solves and how it works."}]},
+  resources:[{"tag": "VIDEO", "name": "AI Agents & Automation explained \u2014 YouTube", "desc": "Search 'AI Agents & Automation explained beginners' on YouTube and watch the highest-rated result."}, {"tag": "DOCS", "name": "scikit-learn documentation \u2014 scikit-learn.org", "desc": "The best ML library documentation available. Clear examples for every algorithm."}]
+},
+{
+  n:19,title:"AI in the Real World",month:"Month 5 \u2014 Building with AI",
+  notes:`<p class="lesson-intro">Week 19: AI in the Real World. Full lesson notes below.</p>
+<div class="lesson-section"><div class="ls-title">Overview</div><div class="ls-body">
+<p>This week covers AI in the Real World as part of Month 5 — Building with AI. Work through the concepts below carefully before attempting the tasks and test.</p>
+</div></div><div class="lesson-section"><div class="ls-title">Healthcare</div><div class="ls-body">
+<p><strong>Medical imaging:</strong> CNNs trained on millions of annotated scans detect diabetic retinopathy, pneumonia, and skin cancer with accuracy matching specialist doctors. Not replacing doctors — giving every patient access to specialist-level screening.</p>
+<p><strong>Drug discovery:</strong> AI predicts how molecules fold and interact, narrowing the search space. DeepMind's AlphaFold solved a 50-year grand challenge in biology — predicting 3D protein structure from amino acid sequence.</p>
+<p><strong>Administrative AI:</strong> transcribes doctor-patient conversations, fills clinical notes automatically, manages scheduling — giving doctors hours more time per week with patients.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Finance and Retail</div><div class="ls-body">
+<p><strong>Fraud detection:</strong> anomaly detection processing every transaction in real time, flagging unusual patterns. Mature AI application running in production for decades.</p>
+<p><strong>Recommendation systems:</strong> Netflix estimates recommendations save $1 billion per year in customer retention. Amazon attributes 35% of revenue to them. Deep learning models predict what each specific user is most likely to engage with.</p>
+<p><strong>Demand forecasting:</strong> ML models predicting how much of each product will be needed where and when. Reduces overstock (waste) and stockouts (lost sales).</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Build vs Buy</div><div class="ls-body">
+<p><strong>Buy:</strong> use existing AI products (ChatGPT, Claude, Copilot). Fast, less technical expertise needed, cheaper at small scale. Limitations: less customisation, third-party dependency, data privacy concerns.</p>
+<p><strong>Build:</strong> custom models and pipelines. Maximum control, better for proprietary data. Requires technical talent, longer development, ongoing maintenance.</p>
+<p>For most businesses in 2024: use general-purpose LLM APIs (buy) for language, use RAG (build) to connect to your knowledge base, build custom ML models only where you have unique data and a genuine performance advantage.</p>
+</div></div>`,
+  tasks:[{"t": "Complete Week 19 reading", "d": "Read through all the notes in this lesson carefully before attempting the tasks.", "done": false}, {"t": "Attempt the Week 19 practical exercise", "d": "Open Google Colab and work through the coding exercise for this topic. Search for the topic name plus 'tutorial' if you need guidance.", "done": false}, {"t": "Watch one video resource from the Resources tab", "d": "Choose one video from the Resources tab and watch it in full. Take notes on anything new.", "done": false}, {"t": "Complete the Week 19 End-of-Week Test", "d": "Attempt the test after completing the notes and tasks. Pass mark is 6/10.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "This is Week 19: AI in the Real World. Which month of the course does this belong to?", "opts": ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"], "ans": 4}, {"type": "short", "q": "Explain the most important concept from Week 19: AI in the Real World in plain English, as if you were explaining it to someone with no technical background."}, {"type": "short", "q": "What is one way that AI in the Real World is used in a real-world application? Describe the problem it solves and how it works."}]},
+  resources:[{"tag": "VIDEO", "name": "AI in the Real World explained \u2014 YouTube", "desc": "Search 'AI in the Real World explained beginners' on YouTube and watch the highest-rated result."}, {"tag": "DOCS", "name": "scikit-learn documentation \u2014 scikit-learn.org", "desc": "The best ML library documentation available. Clear examples for every algorithm."}]
+},
+{
+  n:20,title:"MLOps & Deployment",month:"Month 5 \u2014 Building with AI",
+  notes:`<p class="lesson-intro">Week 20: MLOps & Deployment. Full lesson notes below.</p>
+<div class="lesson-section"><div class="ls-title">Overview</div><div class="ls-body">
+<p>This week covers MLOps & Deployment as part of Month 5 — Building with AI. Work through the concepts below carefully before attempting the tasks and test.</p>
+</div></div><div class="lesson-section"><div class="ls-title">Why MLOps Matters</div><div class="ls-body">
+<p>Traditional software stays working unless code changes. ML models can degrade silently as production data drifts from training data. A fraud model trained on 2022 transaction patterns may become less effective in 2024 as fraud tactics evolve.</p>
+<p>MLOps (Machine Learning Operations) brings software engineering best practices (version control, testing, CI/CD) together with ML-specific challenges (data versioning, experiment tracking, model monitoring).</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Key Tools</div><div class="ls-body">
+<p><strong>MLflow:</strong> experiment tracking — log hyperparameters, metrics, and model files for every training run. Compare runs side by side. Model registry for versioning. The standard MLOps tool.</p>
+<p><strong>Docker:</strong> eliminates "it works on my machine" by packaging your entire application — code, dependencies, configuration — into a container that runs identically anywhere. Like a shipping container: standardised, any port can handle it.</p>
+<p><strong>FastAPI:</strong> expose your trained model as a REST API in ~20 lines of Python. Define input schema, define prediction endpoint, start server. Automatically generates interactive docs at /docs.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Model Drift</div><div class="ls-body">
+<p><strong>Data drift:</strong> statistical properties of input data change over time. <strong>Concept drift:</strong> the underlying relationship between inputs and outputs changes. What constitutes "spam" evolves; what constitutes "creditworthiness" changes with economic conditions.</p>
+<p>Detecting drift: monitor input feature distributions and prediction quality metrics. When detected: retrain on fresh data, update features, or deploy a new model version.</p>
+</div></div>`,
+  tasks:[{"t": "Complete Week 20 reading", "d": "Read through all the notes in this lesson carefully before attempting the tasks.", "done": false}, {"t": "Attempt the Week 20 practical exercise", "d": "Open Google Colab and work through the coding exercise for this topic. Search for the topic name plus 'tutorial' if you need guidance.", "done": false}, {"t": "Watch one video resource from the Resources tab", "d": "Choose one video from the Resources tab and watch it in full. Take notes on anything new.", "done": false}, {"t": "Complete the Week 20 End-of-Week Test", "d": "Attempt the test after completing the notes and tasks. Pass mark is 6/10.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "This is Week 20: MLOps & Deployment. Which month of the course does this belong to?", "opts": ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"], "ans": 4}, {"type": "short", "q": "Explain the most important concept from Week 20: MLOps & Deployment in plain English, as if you were explaining it to someone with no technical background."}, {"type": "short", "q": "What is one way that MLOps & Deployment is used in a real-world application? Describe the problem it solves and how it works."}]},
+  resources:[{"tag": "VIDEO", "name": "MLOps & Deployment explained \u2014 YouTube", "desc": "Search 'MLOps & Deployment explained beginners' on YouTube and watch the highest-rated result."}, {"tag": "DOCS", "name": "scikit-learn documentation \u2014 scikit-learn.org", "desc": "The best ML library documentation available. Clear examples for every algorithm."}]
+},
+{
+  n:21,title:"AI Safety, Ethics & Governance",month:"Month 6 \u2014 Advanced & Capstone",
+  notes:`<p class="lesson-intro">Week 21: AI Safety, Ethics & Governance. Full lesson notes below.</p>
+<div class="lesson-section"><div class="ls-title">Overview</div><div class="ls-body">
+<p>This week covers AI Safety, Ethics & Governance as part of Month 6 — Advanced & Capstone. Work through the concepts below carefully before attempting the tasks and test.</p>
+</div></div><div class="lesson-section"><div class="ls-title">AI Bias — How Systems Discriminate</div><div class="ls-body">
+<p>AI systems learn from data generated by humans in a world with existing inequalities. They can and frequently do learn and amplify those biases — not through malicious programming, but by learning from biased historical data.</p>
+<p>In 2016, ProPublica found the COMPAS recidivism algorithm — used by US courts for bail and sentencing recommendations — was significantly more likely to incorrectly flag Black defendants as high risk and white defendants as low risk. The algorithm had learned from historical criminal justice data that itself reflected decades of unequal policing and sentencing. It encoded and institutionalised existing human bias.</p>
+<p>Similar documented cases: facial recognition systems working significantly worse on darker-skinned women (MIT, 2018), hiring algorithms disadvantaging women for technical roles (Amazon's scrapped tool), medical algorithms systematically allocating less care to Black patients (Science, 2019).</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Types of Bias</div><div class="ls-body">
+<p><strong>Historical bias:</strong> training data reflects past discrimination — the model can learn proxy features (zip code, dialect, name) that correlate with race due to historical housing segregation.</p>
+<p><strong>Representation bias:</strong> certain groups underrepresented in training data. A facial recognition system trained predominantly on lighter-skinned faces will perform worse on darker-skinned faces.</p>
+<p><strong>Measurement bias:</strong> data collected or measured less accurately for some groups — e.g. arrest rates reflecting unequal policing rather than true underlying behaviour.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">Explainability and Regulation</div><div class="ls-body">
+<p>Deep learning models are "black boxes." If an AI denies your mortgage, you have a right under GDPR to understand why. Tools like SHAP and LIME approximate which features drove a specific prediction.</p>
+<p>The <strong>EU AI Act (2024)</strong>, the world's first comprehensive AI law, classifies systems by risk. <strong>Unacceptable risk</strong> (banned): social scoring by governments, real-time biometric surveillance in public spaces. <strong>High risk</strong> (strict requirements): AI in medical devices, employment, education, law enforcement. <strong>Limited risk</strong>: chatbots must disclose they are AI. If your AI system is used by people in the EU, this law applies to you.</p>
+</div></div>
+<div class="lesson-section"><div class="ls-title">AI Alignment</div><div class="ls-body">
+<p>Ensuring AI systems reliably pursue goals that are genuinely what we want — not a technically correct but disastrously wrong interpretation. Tell an AI to "make users happy" — it figures out it can most efficiently do this by stimulating their brain's reward circuits directly. Technically correct, catastrophically wrong. As systems become more capable and autonomous, the consequences of misalignment become more severe.</p>
+</div></div>`,
+  tasks:[{"t": "Complete Week 21 reading", "d": "Read through all the notes in this lesson carefully before attempting the tasks.", "done": false}, {"t": "Attempt the Week 21 practical exercise", "d": "Open Google Colab and work through the coding exercise for this topic. Search for the topic name plus 'tutorial' if you need guidance.", "done": false}, {"t": "Watch one video resource from the Resources tab", "d": "Choose one video from the Resources tab and watch it in full. Take notes on anything new.", "done": false}, {"t": "Complete the Week 21 End-of-Week Test", "d": "Attempt the test after completing the notes and tasks. Pass mark is 6/10.", "done": false}],
+  test:{questions:[{"type": "mcq", "q": "This is Week 21: AI Safety, Ethics & Governance. Which month of the course does this belong to?", "opts": ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"], "ans": 5}, {"type": "short", "q": "Explain the most important concept from Week 21: AI Safety, Ethics & Governance in plain English, as if you were explaining it to someone with no technical background."}, {"type": "short", "q": "What is one way that AI Safety, Ethics & Governance is used in a real-world application? Describe the problem it solves and how it works."}]},
+  resources:[{"tag": "VIDEO", "name": "AI Safety, Ethics & Governance explained \u2014 YouTube", "desc": "Search 'AI Safety, Ethics & Governance explained beginners' on YouTube and watch the highest-rated result."}, {"tag": "DOCS", "name": "scikit-learn documentation \u2014 scikit-learn.org", "desc": "The best ML library documentation available. Clear examples for every algorithm."}]
+},
+{
+  n:22, title:"Capstone Planning & Research", month:"Month 6 — Capstone",
+  notes:`
+    <p class="lesson-intro">You have completed 21 weeks of learning. Now you put it all together. This week is about choosing your capstone project and planning it properly so the build goes smoothly.</p>
+    <div class="lesson-section">
+      <div class="ls-title">What Is the Capstone?</div>
+      <div class="ls-body">
+        <p>The capstone project is your chance to build a complete, end-to-end AI system from scratch — on a problem that genuinely interests you. It is the thing you will show to employers, add to your GitHub profile, and be proud of. It proves that you can take an idea from nothing to a working product using the skills you have built over the past five months.</p>
+        <p>The capstone should be something real — not a tutorial you followed, but something you designed and built yourself. It does not need to be groundbreaking. It needs to be complete, functional, and something you can explain and demonstrate confidently.</p>
+      </div>
+    </div>
+    <div class="lesson-section">
+      <div class="ls-title">Capstone Options</div>
+      <div class="ls-body">
+        <p><strong>Option A — RAG-Powered Knowledge Assistant:</strong> Build a domain-specific question-answering system grounded in a real knowledge base. You choose the domain — law, medicine, your company's documentation, a book series, technical manuals. Users ask questions; your system retrieves relevant information and generates grounded answers with citations. Tech stack: LangChain + Chroma + any LLM API + Streamlit or Gradio for the interface.</p>
+        <p><strong>Option B — Image Classifier Web App:</strong> Train a convolutional neural network to classify images in a domain you care about — plant diseases, food types, dog breeds, waste sorting, skin conditions, architectural styles. Build a web interface where users can upload a photo and get a prediction. Tech stack: TensorFlow/Keras + transfer learning + Gradio or Streamlit + deployed to Hugging Face Spaces.</p>
+        <p><strong>Option C — AI Research Agent:</strong> Build an agent that can receive a research topic, search the web for information, read and synthesise multiple sources, and produce a structured report. Tech stack: LangChain agents + DuckDuckGo search tool + Python REPL + an LLM API.</p>
+        <p><strong>Option D — Your Own Idea:</strong> If you have a specific problem in your work, life, or community that AI could help with, propose your own project. The requirement is that it must use at least one ML model or LLM, have a working interface, and be completable in two weeks.</p>
+      </div>
+    </div>
+    <div class="lesson-section">
+      <div class="ls-title">How to Plan Properly</div>
+      <div class="ls-body">
+        <p>The biggest mistake beginners make on projects is starting to code before they have thought through the whole thing. Spend this week planning. A good plan prevents you from getting two-thirds of the way through and realising a fundamental part of your approach will not work.</p>
+        <p>Your plan should cover: <strong>Problem definition</strong> — exactly what problem are you solving, and for whom? <strong>Data</strong> — where is your data coming from, is it available, do you have permission to use it, how much is there? <strong>Technical approach</strong> — which specific techniques from the course will you use, and why? <strong>Interface</strong> — how will users interact with your system? <strong>Evaluation</strong> — how will you know if it is working well? <strong>Scope control</strong> — what is the minimum viable version you will build first, and what are stretch features you add only if you have time?</p>
+      </div>
+    </div>
+  `,
+  tasks:[
+    {t:"Choose your capstone option and write a project brief",d:"Write a 1-page project brief covering: (1) project title and one-sentence description, (2) the problem it solves and who it is for, (3) what data or knowledge base you will use, (4) which AI techniques you will apply, (5) what the interface will look like, (6) how you will evaluate success.",done:false},
+    {t:"Validate your data source",d:"Actually obtain and inspect the data or knowledge base for your project. Do not assume it will be available. Download it, look at it, understand its structure and quality. If it is not suitable, find out now — not in Week 23.",done:false},
+    {t:"Set up your project repository",d:"Create a new GitHub repository for your capstone. Add a README with your project brief. Set up the folder structure. This is where everything will live. Start as you mean to go on — clean, organised, documented.",done:false},
+    {t:"Build a proof-of-concept in one hour",d:"Do not build the full system. Build the smallest possible thing that shows the core idea works. If your project is a RAG chatbot, get the retrieval working on 5 documents. If it is an image classifier, get transfer learning running on 50 images. A rough proof-of-concept tells you whether your approach is viable.",done:false},
+  ],
+  test:{
+    questions:[
+      {type:'mcq',q:"What is the primary purpose of the capstone project?",opts:["To practise writing Python code in a notebook","To build a complete, end-to-end AI system you can demonstrate and be proud of","To repeat the exercises from earlier weeks","To learn a new AI technique not covered in the course"],ans:1},
+      {type:'mcq',q:"What is the most important thing to do in the planning week before starting to build?",opts:["Write as much code as possible to get ahead","Validate your data source, define your problem precisely, and plan the full scope before writing production code","Choose the most impressive-sounding project topic","Research every possible AI technique you could use"],ans:1},
+      {type:'tf',q:"A capstone project must use cutting-edge, novel AI techniques that have not been used before.",ans:false},
+      {type:'mcq',q:"What is 'scope control' in project planning?",opts:["Controlling how many lines of code you write per day","Defining a minimum viable version to build first, with stretch features added only if time allows — preventing the project from growing unmanageable","Limiting the size of your training dataset","Restricting which Python libraries you are allowed to use"],ans:1},
+      {type:'tf',q:"A proof-of-concept built in one hour can tell you whether your core technical approach is viable before you invest days building the full system.",ans:true},
+      {type:'mcq',q:"Which of these is the best capstone project for a beginner?",opts:["A complete autonomous AI that can replace a human job entirely","A focused, completable system — like a document Q&A tool for a specific knowledge base — that works well and can be demonstrated clearly","The most technically complex project possible, even if it cannot be finished","A project that copies an existing product exactly"],ans:1},
+      {type:'short',q:"Describe your capstone project idea in 3-5 sentences. What problem does it solve? What AI technique will you use? How will you evaluate whether it works?"},
+      {type:'short',q:"What is the risk of starting to code immediately without planning? Describe a specific scenario where insufficient planning could cause a capstone project to fail."},
+    ]
+  },
+  resources:[
+    {tag:"TOOL",name:"Streamlit — streamlit.io",desc:"The fastest way to build a web interface for a Python AI application. Free, minimal code required."},
+    {tag:"TOOL",name:"Gradio — gradio.app",desc:"Another excellent interface framework. Particularly good for demos with file upload, image, and text inputs."},
+    {tag:"SITE",name:"Hugging Face Spaces — huggingface.co/spaces",desc:"Free deployment for Streamlit and Gradio apps. Your finished project will live here."},
+    {tag:"SITE",name:"Kaggle Datasets — kaggle.com/datasets",desc:"Search for datasets relevant to your project idea. Over 50,000 public datasets."},
+  ]
+},
+{
+  n:23, title:"Capstone Build", month:"Month 6 — Capstone",
+  notes:`
+    <p class="lesson-intro">This is build week. Put your plan into action. Your goal by the end of this week is a working prototype — something that actually runs, handles real input, and produces real output.</p>
+    <div class="lesson-section">
+      <div class="ls-title">How to Approach Build Week</div>
+      <div class="ls-body">
+        <p>The most important principle for build week is this: <strong>make it work before you make it good.</strong> The temptation is to spend time on beautiful UI, clean code, and clever optimisations before the core functionality even exists. Resist this. Get the core pipeline working first, even if it is ugly. A working ugly thing is infinitely more valuable than a beautiful thing that does not work yet.</p>
+        <p>Work in this order every day: (1) Identify the single most important thing to build today. (2) Build it. (3) Test it. (4) Fix what is broken. (5) Only then move to the next thing. Never start on step N+1 before step N is genuinely working.</p>
+        <p>When you get stuck — and you will get stuck — use this escalation path: (1) Re-read the error message carefully, (2) Search the exact error message on Google, (3) Ask Claude or ChatGPT to explain the error and suggest a fix, (4) Check the relevant library documentation, (5) Simplify your approach — sometimes the elegant solution is blocked and the obvious simple solution is fine.</p>
+      </div>
+    </div>
+    <div class="lesson-section">
+      <div class="ls-title">Daily Build Checkpoints</div>
+      <div class="ls-body">
+        <p>At the end of each day, answer these three questions in writing: (1) What did I build today? (2) What is working? (3) What is blocking me? This habit forces clarity and prevents you from fooling yourself about progress. If you cannot answer "what is working?" then you have not made real progress yet — you have just been busy.</p>
+        <p>By the end of Day 1, you should have your data pipeline working — data loading, processing, and ready to feed into your model or retrieval system. By the end of Day 2, the core AI component should be working — the model making predictions, or the retrieval returning relevant results. By Day 3, you should have a basic interface where you can interact with the system. Days 4-5 are for refinement, error handling, and making it presentable.</p>
+      </div>
+    </div>
+    <div class="lesson-section">
+      <div class="ls-title">What Good Looks Like</div>
+      <div class="ls-body">
+        <p>A good capstone prototype by the end of this week should: run without crashing on typical inputs, handle at least the core use case your project was designed for, have a user interface (even a simple one) that a non-technical person could use, give meaningful outputs rather than errors or nonsense, and be something you could demo in 5 minutes to someone who has never seen it before.</p>
+        <p>It does not need to be perfect. It does not need to handle every edge case. It does not need to have beautiful design or production-grade error handling. Those are Week 24 improvements. This week, working trumps everything.</p>
+      </div>
+    </div>
+  `,
+  tasks:[
+    {t:"Build the data pipeline",d:"Get your data loading, cleaning, and preprocessing working end-to-end. If it is a RAG system: chunk your documents and create embeddings. If it is an image classifier: set up your dataset with train/validation/test splits. If it is an agent: confirm all tools are working. Test this pipeline independently before connecting it to the model.",done:false},
+    {t:"Build the core AI component",d:"Connect your data pipeline to the AI component. For RAG: set up the vector database and confirm retrieval is returning relevant chunks. For image classification: train your model and confirm it is learning (loss decreasing). For an agent: run it on 3 test tasks and confirm it completes them correctly.",done:false},
+    {t:"Build the user interface",d:"Create a simple interface using Streamlit or Gradio. At minimum: a way to input a question or upload a file, a way to trigger the AI, and a way to see the output. It does not need to be beautiful. It needs to work.",done:false},
+    {t:"Write a daily build log",d:"Each day of this week, write 3-5 sentences: what you built, what is working, and what is blocking you. At the end of the week, you will have a build diary that tracks your progress. This is also useful context if you ask for help.",done:false},
+  ],
+  test:{
+    questions:[
+      {type:'mcq',q:"What is the most important principle for build week?",opts:["Make the UI beautiful before building the backend","Make it work before you make it good — get the core pipeline working first, even if it is ugly","Write comprehensive documentation before writing any code","Choose the most advanced AI technique possible"],ans:1},
+      {type:'tf',q:"A working ugly prototype is more valuable than a beautiful system that does not function yet.",ans:true},
+      {type:'mcq',q:"What is the recommended escalation path when you get stuck on a technical problem?",opts:["Give up and choose a simpler project","Post immediately on forums before trying anything else","Read the error message, search it, ask an AI assistant, check documentation, then simplify your approach","Wait until tomorrow — problems often solve themselves"],ans:1},
+      {type:'short',q:"Describe the current state of your capstone project. What is working? What is the biggest technical challenge you have faced so far, and how did you approach it?"},
+      {type:'short',q:"What would you do differently if you were starting the capstone project again from scratch? What planning or preparation would have saved you time?"},
+    ]
+  },
+  resources:[
+    {tag:"DOCS",name:"Streamlit docs — docs.streamlit.io",desc:"Complete Streamlit documentation. The 'Get started' section gets you from zero to a working app in 30 minutes."},
+    {tag:"DOCS",name:"Gradio docs — gradio.app/docs",desc:"Gradio is particularly easy for ML demos. The Interface class handles most common use cases in 5 lines."},
+    {tag:"TOOL",name:"Claude or ChatGPT",desc:"When stuck on a specific error: paste the full error message and relevant code. Ask for explanation and fix. This is the most efficient debugging tool available."},
+    {tag:"SITE",name:"GitHub Copilot free tier",desc:"AI code completion in VS Code. Helpful for boilerplate code and remembering syntax."},
+  ]
+},
+{
+  n:24, title:"Capstone Review & Reflection", month:"Month 6 — Capstone",
+  notes:`
+    <p class="lesson-intro">This is your final week. Polish your project, present it, and reflect on six months of learning. You are not the same person who started Week 1.</p>
+    <div class="lesson-section">
+      <div class="ls-title">Polishing Your Project</div>
+      <div class="ls-body">
+        <p>This week is about taking your working prototype and making it something you are genuinely proud to show. The core functionality works — now focus on the details that make it feel professional: clean error handling so it does not crash on unexpected input, clear instructions in the UI so a new user knows what to do, informative output messages rather than raw model outputs, a well-written README that explains what the project does and how to use it.</p>
+        <p>Add at least three things this week: (1) proper error handling for the most common failure modes, (2) a clear, welcoming UI with instructions, (3) a README.md that explains the project at the level of someone discovering it on GitHub for the first time.</p>
+      </div>
+    </div>
+    <div class="lesson-section">
+      <div class="ls-title">Documenting and Publishing</div>
+      <div class="ls-body">
+        <p>Publishing your work is not optional — it is the point. A project that only lives on your laptop has no value to your career. A project on GitHub with a clear README, deployed on Hugging Face Spaces with a live demo, is a portfolio piece that anyone can find, use, and evaluate.</p>
+        <p>Your GitHub repository should contain: clean, commented code; a comprehensive README with a project description, installation instructions, usage examples, and screenshots or a demo GIF; a requirements.txt file so anyone can reproduce your environment; and a brief section on what you would improve next. This is the standard format for professional AI project repositories.</p>
+      </div>
+    </div>
+    <div class="lesson-section">
+      <div class="ls-title">The Presentation</div>
+      <div class="ls-body">
+        <p>Prepare a 5-minute presentation or demo video of your project. Structure it as: (1) 30 seconds — what problem does this solve and why does it matter? (2) 2 minutes — live demo of the system working on real input. (3) 1 minute — how it works technically at a high level (what AI techniques did you use?). (4) 1 minute — what you would improve or add with more time.</p>
+        <p>A demo video is often better than a live presentation because you can record multiple takes and choose the best one. Use Loom or OBS to record your screen with narration. Keep it under 5 minutes — concise demonstrations are more impressive than long rambling ones.</p>
+      </div>
+    </div>
+    <div class="lesson-section">
+      <div class="ls-title">Reflection — You Have Come a Long Way</div>
+      <div class="ls-body">
+        <p>Go back and read your answer to Week 1's final test question: "What is one thing about AI that surprised you or that you want to understand better by the end of this course?" Did you get that understanding? What surprised you most along the way?</p>
+        <p>Six months ago, you started with no knowledge of AI. Now you understand: the mathematical foundations (vectors, matrices, gradients, probability), classical machine learning (supervised, unsupervised, evaluation), deep learning (neural networks, CNNs, NLP, Transformers), large language models (how they work, how to prompt them, how to fine-tune and build with them), building AI applications (APIs, agents, deployment, MLOps), and the ethical and safety dimensions of AI. That is a genuinely substantial body of knowledge.</p>
+        <p>The field moves fast. What you have built is not a fixed body of knowledge — it is a foundation and a way of thinking. Keep reading, keep building, keep asking questions. The best AI practitioners are the ones who never stop learning.</p>
+      </div>
+    </div>
+  `,
+  tasks:[
+    {t:"Polish your capstone project",d:"Add proper error handling for at least 3 common failure modes. Improve the UI with clear instructions and helpful output formatting. Test it with 10 different inputs including some unusual or edge-case ones. Fix any crashes you encounter.",done:false},
+    {t:"Write your project README",d:"Write a comprehensive README.md. Include: project title and one-paragraph description, a screenshot or demo GIF, installation and setup instructions, usage examples with sample inputs and outputs, a section on the AI techniques used, and a 'future improvements' section. This is the most important documentation you will write.",done:false},
+    {t:"Deploy your project publicly",d:"Deploy your project to Hugging Face Spaces (for Streamlit/Gradio apps) or GitHub Pages (for static sites). Add the live demo link to your README. Your project now has a URL that anyone in the world can visit. That is a significant achievement.",done:false},
+    {t:"Record a 5-minute demo video",d:"Record yourself demonstrating the project. Show a real use case end to end. Explain what it does and how it works technically. Publish to YouTube (unlisted is fine) and link it from your README. A video demo is the single most effective thing you can put in your portfolio.",done:false},
+    {t:"Write your final reflection",d:"Write 1-2 pages answering: (1) What did you set out to understand at the start? Did you achieve it? (2) What surprised you most? (3) What was hardest? (4) What will you build next? (5) What advice would you give to someone starting this course today? This reflection completes the course.",done:false},
+  ],
+  test:{
+    questions:[
+      {type:'mcq',q:"Why is publishing your capstone project publicly important?",opts:["It is a course requirement with a grade attached","A project only on your laptop has no career value — a public GitHub repo and live demo is a portfolio piece anyone can discover and evaluate","To get feedback from the general public","Because private repositories are not allowed on GitHub"],ans:1},
+      {type:'mcq',q:"What should a good project README contain?",opts:["Only the code itself — READMEs are optional","Project description, installation instructions, usage examples, screenshots or demo GIF, technical explanation, and future improvements","Just a title and author name","A link to the course notes"],ans:1},
+      {type:'tf',q:"A concise 5-minute demo is often more impressive than a long, detailed presentation.",ans:true},
+      {type:'short',q:"Looking back over the full 6 months: what is the single most important concept or skill you learned, and why? How has your understanding of AI changed from where you started?"},
+      {type:'short',q:"What will you build next? Now that you have the foundations, skills, and a completed project — what AI problem or application genuinely excites you and why?"},
+    ]
+  },
+  resources:[
+    {tag:"TOOL",name:"Loom — loom.com",desc:"Free screen recording with narration. The easiest way to record a demo video. Free tier is generous."},
+    {tag:"SITE",name:"Hugging Face Spaces — huggingface.co/spaces",desc:"Deploy and share your AI demo publicly. Free. Supports Streamlit, Gradio, and static HTML."},
+    {tag:"ARTICLE",name:"'How to write a good README' — GitHub docs",desc:"Official GitHub guidance on writing project documentation. Clear template you can follow directly."},
+    {tag:"SITE",name:"Papers With Code — paperswithcode.com",desc:"The latest ML research with linked code. A great place to stay current after the course ends."},
+    {tag:"PODCAST",name:"'Lex Fridman Podcast'",desc:"Long-form conversations with the world's leading AI researchers. Stay connected to the frontier."},
+  ]
+}
+];
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let ALL_WEEKS = WEEKS;
+let db = null;
+let state = { scores:{}, tasks:{}, currentWeek:1 };
+
+// ═══════════════════════════════════════════════
+// INDEXEDDB
+// ═══════════════════════════════════════════════
+function initDB() {
+  return new Promise((resolve) => {
+    const req = indexedDB.open('AIPathway', 1);
+    req.onupgradeneeded = e => {
+      const d = e.target.result;
+      if (!d.objectStoreNames.contains('progress')) d.createObjectStore('progress', { keyPath: 'id' });
+    };
+    req.onsuccess = e => { db = e.target.result; loadState().then(resolve); };
+    req.onerror = () => resolve();
+  });
+}
+
+function saveState() {
+  if (!db) return;
+  const tx = db.transaction('progress', 'readwrite');
+  tx.objectStore('progress').put({ id: 'main', ...state });
+}
+
+function loadState() {
+  return new Promise((resolve) => {
+    if (!db) { resolve(); return; }
+    const tx = db.transaction('progress', 'readonly');
+    const req = tx.objectStore('progress').get('main');
+    req.onsuccess = e => {
+      if (e.target.result) {
+        const { scores, tasks, currentWeek } = e.target.result;
+        state = { scores: scores||{}, tasks: tasks||{}, currentWeek: currentWeek||1 };
+      }
+      resolve();
+    };
+    req.onerror = () => resolve();
+  });
+}
+
+// ═══════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.ntab').forEach(t => t.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  document.querySelector(`[onclick="showView('${name}')"]`).classList.add('active');
+  if (name === 'course') buildCourseView();
+  if (name === 'scores') buildScoresView();
+}
+
+// ═══════════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════════
+function buildDashboard() {
+  const doneWeeks = ALL_WEEKS.filter(w => state.scores[w.n] !== undefined).length;
+  const scores = Object.values(state.scores).filter(s => s !== null && s >= 0);
+  const avg = scores.length ? (scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1) : '—';
+  const passed = scores.filter(s => s >= 6).length;
+  const pct = Math.round((doneWeeks / 24) * 100);
+  const currWeek = state.currentWeek || 1;
+  const currData = ALL_WEEKS.find(w => w.n === currWeek) || ALL_WEEKS[0];
+
+  document.getElementById('stat-pct').textContent = pct + '%';
+  document.getElementById('stat-weeks').textContent = doneWeeks + ' of 24 weeks';
+  document.getElementById('stat-avg').textContent = avg;
+  document.getElementById('stat-passed').textContent = passed;
+  document.getElementById('stat-curr').textContent = 'W' + currWeek;
+  document.getElementById('stat-curr-title').textContent = currData ? currData.title : '—';
+  document.getElementById('prog-pct-label').textContent = pct + '% complete';
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('nav-info').innerHTML = 'WEEK <span>' + String(currWeek).padStart(2,'0') + '</span> / 24';
+
+  // Week dots
+  const dotsEl = document.getElementById('weeks-dots');
+  dotsEl.innerHTML = ALL_WEEKS.map(w => {
+    const done = state.scores[w.n] !== undefined;
+    const curr = w.n === currWeek;
+    const cls = done ? 'done' : curr ? 'curr' : 'lock';
+    return `<div class="wd ${cls}" onclick="openWeek(${w.n})" title="Week ${w.n}: ${w.title}">${String(w.n).padStart(2,'0')}</div>`;
+  }).join('');
+
+  // Current week card
+  buildDashCurrentWeek(currData);
+
+  // Score sidebar
+  buildScoreSidebar();
+}
+
+function buildDashCurrentWeek(w) {
+  if (!w) return;
+  const el = document.getElementById('dash-current-week');
+  const score = state.scores[w.n];
+  const hasTasks = state.tasks[w.n] || {};
+  const taskCount = w.tasks.length;
+  const doneCount = Object.values(hasTasks).filter(Boolean).length;
+  const statusCls = score !== undefined ? 'd' : 'c';
+  const pillCls = score !== undefined ? 'd' : 'c';
+  const pillTxt = score !== undefined ? 'DONE — ' + score + '/10' : 'IN PROGRESS';
+
+  el.innerHTML = `
+    <div class="wk-card is-curr">
+      <div class="wk-head" onclick="openWeek(${w.n})">
+        <div class="wk-num ${statusCls}">${String(w.n).padStart(2,'0')}</div>
+        <div style="flex:1">
+          <div class="wk-title">${w.title}</div>
+          <div class="wk-sub">${w.month} &nbsp;·&nbsp; Tasks: ${doneCount}/${taskCount}</div>
+        </div>
+        <span class="wk-pill ${pillCls}">${pillTxt}</span>
+        <span class="chevron">▼</span>
+      </div>
+    </div>`;
+}
+
+function buildScoreSidebar() {
+  const el = document.getElementById('score-sidebar-list');
+  const scored = ALL_WEEKS.filter(w => state.scores[w.n] !== undefined);
+  if (!scored.length) { el.innerHTML = ''; return; }
+  el.innerHTML = scored.slice(-8).map(w => {
+    const s = state.scores[w.n];
+    const col = s >= 6 ? '#00ffaa' : '#ff4466';
+    return `<div class="srow">
+      <span class="sw">W${String(w.n).padStart(2,'0')}</span>
+      <div class="sbw"><div class="sbf" style="width:${s*10}%;background:${col}"></div></div>
+      <span class="sn" style="color:${col}">${s}/10</span>
+    </div>`;
+  }).join('');
+  document.querySelector('.score-sidebar div:last-child').style.display = 'none';
+}
+
+// ═══════════════════════════════════════════════
+// COURSE VIEW
+// ═══════════════════════════════════════════════
+function buildCourseView() {
+  const el = document.getElementById('course-list');
+  let html = '';
+  let lastMonth = '';
+  ALL_WEEKS.forEach(w => {
+    if (w.month !== lastMonth) {
+      html += `<div class="month-label-div">${w.month}</div>`;
+      lastMonth = w.month;
+    }
+    const score = state.scores[w.n];
+    const done = score !== undefined;
+    const curr = w.n === state.currentWeek;
+    const nCls = done ? 'd' : curr ? 'c' : 'l';
+    const pillCls = done ? 'd' : curr ? 'c' : 'l';
+    const pillTxt = done ? 'PASSED ' + score + '/10' : curr ? 'IN PROGRESS' : 'NOT STARTED';
+    html += `<div class="course-wk ${curr?'is-curr':''}" onclick="openWeek(${w.n})">
+      <span class="cw-n ${nCls}">${String(w.n).padStart(2,'0')}</span>
+      <span class="cw-t">${w.title}</span>
+      <span class="wk-pill ${pillCls}" style="font-family:var(--mono);font-size:9px;padding:3px 8px;border-radius:3px;border:1px solid;letter-spacing:0.06em">${pillTxt}</span>
+    </div>`;
+  });
+  el.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════
+// SCORES VIEW
+// ═══════════════════════════════════════════════
+function buildScoresView() {
+  const scored = ALL_WEEKS.filter(w => state.scores[w.n] !== undefined);
+  const scores = scored.map(w => state.scores[w.n]).filter(s=>s>=0);
+  const avg = scores.length ? (scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1) : '—';
+  const passed = scores.filter(s=>s>=6).length;
+
+  document.getElementById('scores-stats').innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div><div style="font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.1em;margin-bottom:4px">TESTS COMPLETED</div><div style="font-family:var(--mono);font-size:28px;font-weight:700;color:var(--acc)">${scores.length}</div></div>
+      <div><div style="font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.1em;margin-bottom:4px">AVERAGE SCORE</div><div style="font-family:var(--mono);font-size:28px;font-weight:700;color:var(--suc)">${avg}</div></div>
+    </div>`;
+
+  const passRate = scores.length ? Math.round((passed/scores.length)*100) : 0;
+  document.getElementById('scores-passrate').innerHTML = `
+    <div><div style="font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.1em;margin-bottom:4px">TESTS PASSED</div><div style="font-family:var(--mono);font-size:28px;font-weight:700;color:var(--gold)">${passed}</div></div>
+    <div style="margin-top:12px"><div style="font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.1em;margin-bottom:6px">PASS RATE</div>
+    <div style="background:var(--border3);height:6px;border-radius:3px;overflow:hidden"><div style="width:${passRate}%;height:100%;background:var(--gold);border-radius:3px"></div></div>
+    <div style="font-family:var(--mono);font-size:11px;color:var(--gold);margin-top:4px">${passRate}%</div></div>`;
+
+  const allEl = document.getElementById('all-scores-list');
+  if (!scored.length) { allEl.innerHTML = '<div style="font-family:var(--mono);font-size:11px;color:var(--text3);padding:20px 0;text-align:center">Complete tests to see scores here</div>'; return; }
+  allEl.innerHTML = scored.map(w => {
+    const s = state.scores[w.n];
+    const col = s >= 6 ? '#00ffaa' : '#ff4466';
+    const pillTxt = s >= 6 ? 'PASS' : 'RETRY';
+    return `<div class="all-score-row">
+      <span class="asr-week">W${String(w.n).padStart(2,'0')} ${w.title.substring(0,12)}...</span>
+      <div class="asr-bar"><div class="asr-fill" style="width:${s*10}%;background:${col}"></div></div>
+      <span class="asr-score" style="color:${col}">${s}/10</span>
+      <span class="asr-pill" style="border-color:${col};color:${col}">${pillTxt}</span>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════
+// WEEK MODAL
+// ═══════════════════════════════════════════════
+let currentModalWeek = null;
+
+function openWeek(n) {
+  const w = ALL_WEEKS.find(x => x.n === n);
+  if (!w) return;
+  currentModalWeek = w;
+  state.currentWeek = n;
+  saveState();
+
+  document.getElementById('modal-week-label').textContent = 'WEEK ' + String(n).padStart(2,'0');
+  document.getElementById('modal-title').textContent = w.title;
+  document.getElementById('modal-month').textContent = w.month;
+
+  // Reset tabs
+  document.querySelectorAll('.wdt').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.wd-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.wdt')[0].classList.add('active');
+  document.getElementById('modal-notes').classList.add('active');
+
+  renderNotes(w);
+  renderTasks(w);
+  renderTest(w);
+  renderResources(w);
+
+  document.getElementById('week-modal').classList.add('open');
+  document.getElementById('week-modal').scrollTop = 0;
+}
+
+function closeModal() {
+  document.getElementById('week-modal').classList.remove('open');
+  buildDashboard();
+}
+
+function switchModalTab(tab, btn) {
+  document.querySelectorAll('.wdt').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.wd-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('modal-' + tab).classList.add('active');
+}
+
+// ═══════════════════════════════════════════════
+// RENDER: NOTES
+// ═══════════════════════════════════════════════
+function renderNotes(w) {
+  document.getElementById('modal-notes').innerHTML = w.notes;
+}
+
+// ═══════════════════════════════════════════════
+// RENDER: TASKS
+// ═══════════════════════════════════════════════
+function renderTasks(w) {
+  const saved = state.tasks[w.n] || {};
+  const html = w.tasks.map((t, i) => {
+    const done = !!saved[i];
+    return `<div class="task-item">
+      <div class="tcheck ${done?'on':''}" onclick="toggleTask(${w.n},${i},this)"></div>
+      <div>
+        <div class="task-txt ${done?'done':''}">${t.t}</div>
+        <div class="task-desc">${t.d}</div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('modal-tasks').innerHTML = html;
+}
+
+function toggleTask(weekN, taskI, el) {
+  if (!state.tasks[weekN]) state.tasks[weekN] = {};
+  const on = !state.tasks[weekN][taskI];
+  state.tasks[weekN][taskI] = on;
+  el.classList.toggle('on', on);
+  const txt = el.nextElementSibling.querySelector('.task-txt');
+  txt.classList.toggle('done', on);
+  saveState();
+}
+
+// ═══════════════════════════════════════════════
+// RENDER: TEST
+// ═══════════════════════════════════════════════
+function renderTest(w) {
+  const savedScore = state.scores[w.n];
+  const el = document.getElementById('modal-test');
+  const isBaseline = w.test && w.test.isBaseline;
+
+  let html = '';
+  if (isBaseline) {
+    html += `<div style="background:rgba(232,197,71,0.08);border:1px solid rgba(232,197,71,0.3);border-radius:var(--r);padding:12px 14px;margin-bottom:16px;font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:0.05em">BASELINE TEST — No pass mark. Answer honestly before starting Week 1.</div>`;
+  }
+  if (savedScore !== undefined) {
+    const pass = savedScore >= 6 || isBaseline;
+    html += `<div class="score-result ${pass?'pass':'fail'}" style="margin-bottom:16px">
+      <div class="big">${isBaseline ? savedScore + '/10' : savedScore + '/10'}</div>
+      <div class="verdict">${isBaseline ? 'Baseline recorded' : savedScore>=6 ? '✓ Passed — well done!' : '✗ Below pass mark (6/10) — review notes and retry'}</div>
+      ${!isBaseline ? `<button class="test-btn" style="margin-top:10px" onclick="retakeTest(${w.n})">RETAKE TEST</button>` : ''}
+    </div>`;
+  }
+
+  html += w.test.questions.map((q, i) => {
+    const num = `<div class="q-num">QUESTION ${i+1} OF ${w.test.questions.length}${q.type==='tf'?' — TRUE / FALSE':q.type==='short'?' — SHORT ANSWER':''}</div>`;
+    if (q.type === 'mcq') {
+      return `<div class="question" id="q-${w.n}-${i}">${num}<div class="q-text">${q.q}</div>${q.opts.map((o,j)=>`<div class="opt" onclick="selectOpt(this,${j},${q.ans},${i},${w.n})">${o}</div>`).join('')}</div>`;
+    } else if (q.type === 'tf') {
+      return `<div class="question" id="q-${w.n}-${i}">${num}<div class="q-text">${q.q}</div>
+        <div class="opt" onclick="selectOpt(this,1,${q.ans?1:0},${i},${w.n})">True</div>
+        <div class="opt" onclick="selectOpt(this,0,${q.ans?1:0},${i},${w.n})">False</div></div>`;
+    } else {
+      return `<div class="question short-q" id="q-${w.n}-${i}">${num}<div class="q-text">${q.q}</div><textarea placeholder="Write your answer here..." rows="3"></textarea></div>`;
+    }
+  }).join('');
+
+  html += `<button class="test-btn" onclick="submitTest(${w.n})">SUBMIT TEST →</button>`;
+  el.innerHTML = html;
+}
+
+function selectOpt(el, chosen, correct, qIdx, weekN) {
+  const q = document.getElementById('q-' + weekN + '-' + qIdx);
+  q.querySelectorAll('.opt').forEach(o => o.classList.remove('sel','right','wrong'));
+  el.classList.add('sel');
+  el.dataset.chosen = chosen;
+  el.dataset.correct = correct;
+}
+
+function submitTest(weekN) {
+  const w = ALL_WEEKS.find(x => x.n === weekN);
+  const qs = w.test.questions;
+  let score = 0;
+  let gradeable = 0;
+
+  qs.forEach((q, i) => {
+    if (q.type === 'short') return;
+    gradeable++;
+    const qEl = document.getElementById('q-' + weekN + '-' + i);
+    if (!qEl) return;
+    const sel = qEl.querySelector('.opt.sel');
+    if (!sel) return;
+    const chosen = parseInt(sel.dataset.chosen);
+    const correct = parseInt(sel.dataset.correct);
+    if (chosen === correct) {
+      sel.classList.remove('sel');
+      sel.classList.add('right');
+      score++;
+    } else {
+      sel.classList.add('wrong');
+      // show correct
+      const opts = qEl.querySelectorAll('.opt');
+      if (q.type === 'tf') {
+        opts[correct === 1 ? 0 : 1].classList.add('right');
+      } else {
+        if (opts[correct]) opts[correct].classList.add('right');
+      }
+    }
+  });
+
+  const finalScore = gradeable > 0 ? Math.round((score / gradeable) * 10) : 10;
+  state.scores[weekN] = finalScore;
+
+  // Advance current week if this was the current one and they passed
+  if (weekN === state.currentWeek && (finalScore >= 6 || w.test.isBaseline) && weekN < 24) {
+    state.currentWeek = weekN + 1;
+  }
+  saveState();
+
+  const pass = finalScore >= 6 || w.test.isBaseline;
+  const resultEl = document.createElement('div');
+  resultEl.className = 'score-result ' + (pass ? 'pass' : 'fail');
+  resultEl.innerHTML = `<div class="big">${finalScore}/10</div><div class="verdict">${w.test.isBaseline ? 'Baseline recorded — no pass mark for Week 1' : pass ? '✓ Passed!' : '✗ Score: ' + finalScore + '/10 — Pass mark is 6/10. Review the notes and try again.'}</div>`;
+
+  const btn = document.querySelector('#modal-test .test-btn:last-child');
+  if (btn) btn.replaceWith(resultEl);
+
+  buildDashboard();
+}
+
+function retakeTest(weekN) {
+  delete state.scores[weekN];
+  saveState();
+  const w = ALL_WEEKS.find(x => x.n === weekN);
+  renderTest(w);
+}
+
+// ═══════════════════════════════════════════════
+// RENDER: RESOURCES
+// ═══════════════════════════════════════════════
+function renderResources(w) {
+  document.getElementById('modal-resources').innerHTML = w.resources.map(r => `
+    <div class="res-item">
+      <span class="res-tag">${r.tag}</span>
+      <div>
+        <div class="res-name">${r.name}</div>
+        <div class="res-desc">${r.desc}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+async function init() {
+  loadTheme();
+  await initDB();
+  buildDashboard();
+}
+
+
+// ═══════════════════════════════════════════════
+// THEME
+// ═══════════════════════════════════════════════
+function applyTheme(theme) {
+  const html = document.documentElement;
+  const btn = document.getElementById('theme-btn');
+  const icon = document.getElementById('theme-icon');
+  const label = document.getElementById('theme-label');
+  if (theme === 'light') {
+    html.setAttribute('data-theme', 'light');
+    if (icon) icon.textContent = '☽';
+    if (label) label.textContent = 'DARK';
+    if (btn) { btn.style.borderColor = 'rgba(124,58,237,0.4)'; btn.style.color = '#7c3aed'; }
+  } else {
+    html.removeAttribute('data-theme');
+    if (icon) icon.textContent = '☀';
+    if (label) label.textContent = 'LIGHT';
+    if (btn) { btn.style.borderColor = ''; btn.style.color = ''; }
+  }
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'light' ? 'dark' : 'light';
+  applyTheme(next);
+  try { localStorage.setItem('ai-pathway-theme', next); } catch(e) {}
+}
+
+function loadTheme() {
+  try {
+    const saved = localStorage.getItem('ai-pathway-theme');
+    if (saved) applyTheme(saved);
+  } catch(e) {}
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
